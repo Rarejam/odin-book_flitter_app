@@ -598,10 +598,10 @@ body.dark-mode .second-slide > div:hover {
   background: #1da1f2;
 }
 .username {
-  height: 10%;
+  height: 10vh;
   display: flex;
   align-items: center;
-  margin: 10px;
+  margin: 12px;
   gap: 10px;
 }
 .username-image {
@@ -610,7 +610,6 @@ body.dark-mode .second-slide > div:hover {
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #1da1f2;
   /* background-color: red; */
 }
 .username > div {

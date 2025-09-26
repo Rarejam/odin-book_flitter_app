@@ -163,8 +163,15 @@ const HomeFollowing = () => {
             >
               {" "}
               <img src={commentIcon} alt="" />
-              <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-            </Link>
+              <div
+                style={{
+                  marginLeft: "5px",
+                  fontSize: "18px",
+                }}
+              >
+                <div style={{ color: "white" }}>1</div>
+              </div>
+            </Link>{" "}
           </div>
           <div>
             <img src={likeIcon} alt="" />
@@ -278,7 +285,14 @@ const HomeFollowing = () => {
             >
               {" "}
               <img src={commentIcon} alt="" />
-              <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+              <div
+                style={{
+                  marginLeft: "5px",
+                  fontSize: "18px",
+                }}
+              >
+                <div style={{ color: "white" }}>1</div>
+              </div>
             </Link>{" "}
           </div>
           <div>

@@ -156,9 +156,9 @@ const HomeDiscover = () => {
                     fontSize: "18px",
                   }}
                 >
-                  1
+                  <div style={{ color: "white" }}>1</div>
                 </div>
-              </Link>
+              </Link>{" "}
             </div>
             <div>
               <img src={likeIcon} alt="" />
@@ -273,7 +273,14 @@ const HomeDiscover = () => {
               >
                 {" "}
                 <img src={commentIcon} alt="" />
-                <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+                <div
+                  style={{
+                    marginLeft: "5px",
+                    fontSize: "18px",
+                  }}
+                >
+                  <div style={{ color: "white" }}>1</div>
+                </div>
               </Link>{" "}
             </div>
             <div>
@@ -373,7 +380,14 @@ const HomeDiscover = () => {
               >
                 {" "}
                 <img src={commentIcon} alt="" />
-                <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+                <div
+                  style={{
+                    marginLeft: "5px",
+                    fontSize: "18px",
+                  }}
+                >
+                  <div style={{ color: "white" }}>1</div>
+                </div>
               </Link>{" "}
             </div>
             <div>
@@ -489,7 +503,14 @@ const HomeDiscover = () => {
               >
                 {" "}
                 <img src={commentIcon} alt="" />
-                <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+                <div
+                  style={{
+                    marginLeft: "5px",
+                    fontSize: "18px",
+                  }}
+                >
+                  <div style={{ color: "white" }}>1</div>
+                </div>
               </Link>{" "}
             </div>
             <div>

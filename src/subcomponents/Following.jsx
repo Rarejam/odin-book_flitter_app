@@ -76,8 +76,25 @@ const Following = () => {
 
         <div className="post-bottom">
           <div>
-            <img src={commentIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+            <Link
+              style={{
+                display: "flex",
+                textDecoration: "none",
+                alignItems: "center",
+              }}
+              to="/home/comment"
+            >
+              {" "}
+              <img src={commentIcon} alt="" />
+              <div
+                style={{
+                  marginLeft: "5px",
+                  fontSize: "18px",
+                }}
+              >
+                <div style={{ color: "white" }}>1</div>
+              </div>
+            </Link>{" "}
           </div>
           <div>
             <img src={likeIcon} alt="" />

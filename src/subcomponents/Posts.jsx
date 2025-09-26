@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import flitterIcon from "../assets/flitterIcon.svg";
-import commentIcon from "../assets/like.svg";
+import commentIcon from "../assets/Comments.svg";
 import likeIcon from "../assets/like.svg";
 import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";

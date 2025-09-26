@@ -5,6 +5,7 @@ import profileIcon from "../assets/person.svg";
 import settingsIcon from "../assets/settings.svg";
 import logOutIcon from "../assets/logOut.svg";
 import findIcon from "../assets/find_user.svg";
+import nodeIcon from "../assets/node.svg";
 import { useState } from "react";
 
 const LeftNav = () => {
@@ -27,7 +28,7 @@ const LeftNav = () => {
 
       <div className="username">
         <div className="username-image">
-          <img src={flitterIcon} alt="user avatar" />
+          <img src={nodeIcon} alt="user avatar" />
         </div>
         <div>
           <div>Jamal</div>
@@ -121,31 +122,12 @@ const LeftNav = () => {
           />
           Settings
         </Link>
-        {/* <Link
-          className="nav-link"
-          to="/home/create"
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            fontSize: "18px",
-            fontStyle: "bold",
-            gap: "5px",
-          }}
-        >
-          <img
-            src={createIcon}
-            style={{
-              width: "30px",
-              height: "30px",
-            }}
-            alt=""
-          />
-          Create Post
-        </Link> */}
+
         <button onClick={toggleTheme} className="theme-toggle">
           {darkMode ? "🌙 Dark mode" : "☀️ Light mode"}
         </button>
         <Link
+          to="https://github.com/Rarejam/odin-book_flitter_app"
           className="nav-link"
           style={{
             display: "flex",
@@ -167,6 +149,7 @@ const LeftNav = () => {
           Github
         </Link>
         <Link
+          to="/"
           className="nav-link"
           style={{
             display: "flex",

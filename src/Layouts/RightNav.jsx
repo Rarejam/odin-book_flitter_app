@@ -1,5 +1,8 @@
-import flitterIcon from "../assets/flitterIcon.svg";
 import searchIcon from "../assets/search.svg";
+import mdnIcon from "../assets/mdn.svg";
+import reactIcon from "../assets/react.svg";
+import nodeIcon from "../assets/node.svg";
+
 const RightNav = () => {
   return (
     <div className="right-nav">
@@ -89,7 +92,7 @@ const RightNav = () => {
         >
           <img
             className="username-image"
-            src={flitterIcon}
+            src={reactIcon}
             style={{
               marginLeft: "5px",
               height: "30px",
@@ -137,7 +140,7 @@ const RightNav = () => {
         >
           <img
             className="username-image"
-            src={flitterIcon}
+            src={nodeIcon}
             style={{
               marginLeft: "5px",
               height: "30px",
@@ -184,7 +187,7 @@ const RightNav = () => {
         >
           <img
             className="username-image"
-            src={flitterIcon}
+            src={mdnIcon}
             style={{
               marginLeft: "5px",
               height: "30px",
