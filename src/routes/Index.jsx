@@ -22,7 +22,13 @@ const Index = () => {
             gap: "5px",
           }}
         >
-          <h1>Flitter</h1>
+          <h1
+            style={{
+              color: "#1da1f2",
+            }}
+          >
+            Flitter
+          </h1>
           <img
             src={flitterIcon}
             alt="Flitter Icon"

@@ -1,345 +1,479 @@
+// import flitterIcon from "../assets/flitterIcon.svg";
+// import dateIcon from "../assets/calender.svg";
+// import { Link } from "react-router-dom";
+// import createIcon from "../assets/create.svg";
+
+// const FindFollowers = () => {
+//   return (
+//     <div className="users-div">
+//       {/* another user */}
+//       <div className="user">
+//         <div className="profile">
+//           <div className="profile-pic-div">
+//             <div className="profile-picture">
+//               <img src={flitterIcon} alt="" />
+//             </div>
+//           </div>
+//           <div style={{ fontStyle: "bold", fontSize: "26px" }}>Rarejam</div>
+//           <div style={{ fontSize: "16px", fontStyle: "italic", color: "grey" }}>
+//             @agarajamaldeen4ce96c
+//           </div>
+//           <div
+//             style={{
+//               fontSize: "14px",
+//               color: "grey",
+//               display: "flex",
+//               alignItems: "center",
+//               gap: "2px",
+//             }}
+//           >
+//             <img
+//               src={dateIcon}
+//               alt=""
+//               style={{
+//                 height: "15px",
+//                 width: "15px",
+//               }}
+//             />{" "}
+//             Joined on September 2025
+//           </div>
+//           <div style={{ display: "flex", gap: "10px", color: "grey" }}>
+//             <div>1 follwoing</div>
+//             <div> 0 followers</div>
+//           </div>
+
+//           {/* //another */}
+//           <div
+//             style={{
+//               display: "flex",
+//               gap: "20px",
+//               marginTop: "15px",
+//             }}
+//           >
+//             <button
+//               style={{
+//                 width: "8vw",
+//                 height: "2.4em",
+//                 border: "none",
+//                 borderRadius: "8px",
+//                 backgroundColor: "#1da1f2",
+//                 color: "white",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 textDecoration: "none",
+//                 gap: "2px",
+//               }}
+//             >
+//               follow
+//               <img src={createIcon} alt="" style={{}} />
+//             </button>
+//             <Link
+//               to="/home/profile"
+//               style={{
+//                 width: "8vw",
+//                 height: "2em",
+//                 border: "none",
+//                 borderRadius: "8px",
+//                 backgroundColor: "#1da1f2",
+//                 color: "white",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 textDecoration: "none",
+//               }}
+//             >
+//               view
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* another user */}
+//       <div className="user">
+//         <div className="profile">
+//           <div className="profile-pic-div">
+//             <div className="profile-picture">
+//               <img src={flitterIcon} alt="" />
+//             </div>
+//           </div>
+//           <div style={{ fontStyle: "bold", fontSize: "26px" }}>Rarejam</div>
+//           <div style={{ fontSize: "16px", fontStyle: "italic", color: "grey" }}>
+//             @agarajamaldeen4ce96c
+//           </div>
+//           <div
+//             style={{
+//               fontSize: "14px",
+//               color: "grey",
+//               display: "flex",
+//               alignItems: "center",
+//               gap: "2px",
+//             }}
+//           >
+//             <img
+//               src={dateIcon}
+//               alt=""
+//               style={{
+//                 height: "15px",
+//                 width: "15px",
+//               }}
+//             />{" "}
+//             Joined on September 2025
+//           </div>
+//           <div style={{ display: "flex", gap: "10px", color: "grey" }}>
+//             <div>1 follwoing</div>
+//             <div> 0 followers</div>
+//           </div>
+
+//           {/* //another */}
+//           <div
+//             style={{
+//               display: "flex",
+//               gap: "20px",
+//               marginTop: "15px",
+//             }}
+//           >
+//             <button
+//               style={{
+//                 width: "8vw",
+//                 height: "2.4em",
+//                 border: "none",
+//                 borderRadius: "8px",
+//                 backgroundColor: "#1da1f2",
+//                 color: "white",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 textDecoration: "none",
+//                 gap: "2px",
+//               }}
+//             >
+//               follow
+//               <img src={createIcon} alt="" style={{}} />
+//             </button>
+//             <Link
+//               to="/home/profile"
+//               style={{
+//                 width: "8vw",
+//                 height: "2em",
+//                 border: "none",
+//                 borderRadius: "8px",
+//                 backgroundColor: "#1da1f2",
+//                 color: "white",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 textDecoration: "none",
+//               }}
+//             >
+//               view
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* another user */}
+
+//       <div className="user">
+//         <div className="profile">
+//           <div className="profile-pic-div">
+//             <div className="profile-picture">
+//               <img src={flitterIcon} alt="" />
+//             </div>
+//           </div>
+//           <div style={{ fontStyle: "bold", fontSize: "26px" }}>Rarejam</div>
+//           <div style={{ fontSize: "16px", fontStyle: "italic", color: "grey" }}>
+//             @agarajamaldeen4ce96c
+//           </div>
+//           <div
+//             style={{
+//               fontSize: "14px",
+//               color: "grey",
+//               display: "flex",
+//               alignItems: "center",
+//               gap: "2px",
+//             }}
+//           >
+//             <img
+//               src={dateIcon}
+//               alt=""
+//               style={{
+//                 height: "15px",
+//                 width: "15px",
+//               }}
+//             />{" "}
+//             Joined on September 2025
+//           </div>
+//           <div style={{ display: "flex", gap: "10px", color: "grey" }}>
+//             <div>1 follwoing</div>
+//             <div> 0 followers</div>
+//           </div>
+
+//           {/* //another */}
+//           <div
+//             style={{
+//               display: "flex",
+//               gap: "20px",
+//               marginTop: "15px",
+//             }}
+//           >
+//             <button
+//               style={{
+//                 width: "8vw",
+//                 height: "2.4em",
+//                 border: "none",
+//                 borderRadius: "8px",
+//                 backgroundColor: "#1da1f2",
+//                 color: "white",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 textDecoration: "none",
+//                 gap: "2px",
+//               }}
+//             >
+//               follow
+//               <img src={createIcon} alt="" style={{}} />
+//             </button>
+//             <Link
+//               to="/home/profile"
+//               style={{
+//                 width: "8vw",
+//                 height: "2em",
+//                 border: "none",
+//                 borderRadius: "8px",
+//                 backgroundColor: "#1da1f2",
+//                 color: "white",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 textDecoration: "none",
+//               }}
+//             >
+//               view
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* /another user */}
+//       <div className="user">
+//         <div className="profile">
+//           <div className="profile-pic-div">
+//             <div className="profile-picture">
+//               <img src={flitterIcon} alt="" />
+//             </div>
+//           </div>
+//           <div style={{ fontStyle: "bold", fontSize: "26px" }}>Rarejam</div>
+//           <div style={{ fontSize: "16px", fontStyle: "italic", color: "grey" }}>
+//             @agarajamaldeen4ce96c
+//           </div>
+//           <div
+//             style={{
+//               fontSize: "14px",
+//               color: "grey",
+//               display: "flex",
+//               alignItems: "center",
+//               gap: "2px",
+//             }}
+//           >
+//             <img
+//               src={dateIcon}
+//               alt=""
+//               style={{
+//                 height: "15px",
+//                 width: "15px",
+//               }}
+//             />{" "}
+//             Joined on September 2025
+//           </div>
+//           <div style={{ display: "flex", gap: "10px", color: "grey" }}>
+//             <div>1 follwoing</div>
+//             <div> 0 followers</div>
+//           </div>
+
+//           {/* //another */}
+//           <div
+//             style={{
+//               display: "flex",
+//               gap: "20px",
+//               marginTop: "15px",
+//             }}
+//           >
+//             <button
+//               style={{
+//                 width: "8vw",
+//                 height: "2.4em",
+//                 border: "none",
+//                 borderRadius: "8px",
+//                 backgroundColor: "#1da1f2",
+//                 color: "white",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 textDecoration: "none",
+//                 gap: "2px",
+//               }}
+//             >
+//               follow
+//               <img src={createIcon} alt="" style={{}} />
+//             </button>
+//             <Link
+//               to="/home/profile"
+//               style={{
+//                 width: "8vw",
+//                 height: "2em",
+//                 border: "none",
+//                 borderRadius: "8px",
+//                 backgroundColor: "#1da1f2",
+//                 color: "white",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 textDecoration: "none",
+//               }}
+//             >
+//               view
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default FindFollowers;
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 import flitterIcon from "../assets/flitterIcon.svg";
 import dateIcon from "../assets/calender.svg";
 import { Link } from "react-router-dom";
-import createIcon from "../assets/create.svg";
 
-const FindFollowers = () => {
+const AllUsers = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const queryUsers = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/api/all-users");
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    queryUsers();
+  }, []);
+
+  const toggleFollow = (id) => {
+    setUsers(
+      users.map((user) =>
+        user.id === id ? { ...user, isFollowing: !user.isFollowing } : user
+      )
+    );
+  };
   return (
     <div className="users-div">
-      {/* another user */}
-      <div className="user">
-        <div className="profile">
-          <div className="profile-pic-div">
-            <div className="profile-picture">
-              <img src={flitterIcon} alt="" />
+      {users.map((user) => (
+        <div className="user" key={user.id}>
+          <div className="profile">
+            <div className="profile-pic-div">
+              <div className="profile-picture">
+                <img
+                  src={user.profileImage || flitterIcon} // ✅ real image with fallback
+                  alt={user.username}
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <div style={{ fontStyle: "bold", fontSize: "26px" }}>Rarejam</div>
-          <div style={{ fontSize: "16px", fontStyle: "italic", color: "grey" }}>
-            @agarajamaldeen4ce96c
-          </div>
-          <div
-            style={{
-              fontSize: "14px",
-              color: "grey",
-              display: "flex",
-              alignItems: "center",
-              gap: "2px",
-            }}
-          >
-            <img
-              src={dateIcon}
-              alt=""
-              style={{
-                height: "15px",
-                width: "15px",
-              }}
-            />{" "}
-            Joined on September 2025
-          </div>
-          <div style={{ display: "flex", gap: "10px", color: "grey" }}>
-            <div>1 follwoing</div>
-            <div> 0 followers</div>
-          </div>
 
-          {/* //another */}
-          <div
-            style={{
-              display: "flex",
-              gap: "20px",
-              marginTop: "15px",
-            }}
-          >
-            <button
+            {/* username */}
+            <div style={{ fontStyle: "bold", fontSize: "26px" }}>
+              {user.username}
+            </div>
+
+            {/* handle */}
+            <div
               style={{
-                width: "8vw",
-                height: "2.4em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-                color: "white",
+                fontSize: "16px",
+                fontStyle: "italic",
+                color: "grey",
+              }}
+            >
+              @{user.email?.split("@")[0]}
+            </div>
+
+            {/* joined */}
+            <div
+              style={{
+                fontSize: "14px",
+                color: "grey",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
                 gap: "2px",
               }}
             >
-              follow
-              <img src={createIcon} alt="" style={{}} />
-            </button>
-            <Link
-              to="/home/profile"
+              <img
+                src={dateIcon}
+                alt=""
+                style={{
+                  height: "15px",
+                  width: "15px",
+                }}
+              />{" "}
+              Joined on {new Date(user.createdAt).toLocaleDateString()}
+            </div>
+
+            {/* followers/following */}
+            <div style={{ display: "flex", gap: "10px", color: "grey" }}>
+              <div>{user.following?.length || 0} following</div>
+              <div>{user.followers?.length || 0} followers</div>
+            </div>
+
+            {/* buttons */}
+            <div
               style={{
-                width: "8vw",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-                color: "white",
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
+                gap: "20px",
+                marginTop: "15px",
               }}
             >
-              view
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* another user */}
-      <div className="user">
-        <div className="profile">
-          <div className="profile-pic-div">
-            <div className="profile-picture">
-              <img src={flitterIcon} alt="" />
+              <button
+                style={{
+                  width: "8vw",
+                  height: "2em",
+                  border: "none",
+                  borderRadius: "8px",
+                  backgroundColor: "#1da1f2",
+                  color: "white",
+                }}
+                onClick={() => toggleFollow(user.id)}
+              >
+                {user.isFollowing ? "unfollow" : "follow"}
+              </button>
+              <button
+                style={{
+                  width: "8vw",
+                  height: "2em",
+                  border: "none",
+                  borderRadius: "8px",
+                  backgroundColor: "#1da1f2",
+                  color: "white",
+                }}
+              >
+                view
+              </button>
             </div>
           </div>
-          <div style={{ fontStyle: "bold", fontSize: "26px" }}>Rarejam</div>
-          <div style={{ fontSize: "16px", fontStyle: "italic", color: "grey" }}>
-            @agarajamaldeen4ce96c
-          </div>
-          <div
-            style={{
-              fontSize: "14px",
-              color: "grey",
-              display: "flex",
-              alignItems: "center",
-              gap: "2px",
-            }}
-          >
-            <img
-              src={dateIcon}
-              alt=""
-              style={{
-                height: "15px",
-                width: "15px",
-              }}
-            />{" "}
-            Joined on September 2025
-          </div>
-          <div style={{ display: "flex", gap: "10px", color: "grey" }}>
-            <div>1 follwoing</div>
-            <div> 0 followers</div>
-          </div>
-
-          {/* //another */}
-          <div
-            style={{
-              display: "flex",
-              gap: "20px",
-              marginTop: "15px",
-            }}
-          >
-            <button
-              style={{
-                width: "8vw",
-                height: "2.4em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-                gap: "2px",
-              }}
-            >
-              follow
-              <img src={createIcon} alt="" style={{}} />
-            </button>
-            <Link
-              to="/home/profile"
-              style={{
-                width: "8vw",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-              }}
-            >
-              view
-            </Link>
-          </div>
         </div>
-      </div>
-
-      {/* another user */}
-
-      <div className="user">
-        <div className="profile">
-          <div className="profile-pic-div">
-            <div className="profile-picture">
-              <img src={flitterIcon} alt="" />
-            </div>
-          </div>
-          <div style={{ fontStyle: "bold", fontSize: "26px" }}>Rarejam</div>
-          <div style={{ fontSize: "16px", fontStyle: "italic", color: "grey" }}>
-            @agarajamaldeen4ce96c
-          </div>
-          <div
-            style={{
-              fontSize: "14px",
-              color: "grey",
-              display: "flex",
-              alignItems: "center",
-              gap: "2px",
-            }}
-          >
-            <img
-              src={dateIcon}
-              alt=""
-              style={{
-                height: "15px",
-                width: "15px",
-              }}
-            />{" "}
-            Joined on September 2025
-          </div>
-          <div style={{ display: "flex", gap: "10px", color: "grey" }}>
-            <div>1 follwoing</div>
-            <div> 0 followers</div>
-          </div>
-
-          {/* //another */}
-          <div
-            style={{
-              display: "flex",
-              gap: "20px",
-              marginTop: "15px",
-            }}
-          >
-            <button
-              style={{
-                width: "8vw",
-                height: "2.4em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-                gap: "2px",
-              }}
-            >
-              follow
-              <img src={createIcon} alt="" style={{}} />
-            </button>
-            <Link
-              to="/home/profile"
-              style={{
-                width: "8vw",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-              }}
-            >
-              view
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* /another user */}
-      <div className="user">
-        <div className="profile">
-          <div className="profile-pic-div">
-            <div className="profile-picture">
-              <img src={flitterIcon} alt="" />
-            </div>
-          </div>
-          <div style={{ fontStyle: "bold", fontSize: "26px" }}>Rarejam</div>
-          <div style={{ fontSize: "16px", fontStyle: "italic", color: "grey" }}>
-            @agarajamaldeen4ce96c
-          </div>
-          <div
-            style={{
-              fontSize: "14px",
-              color: "grey",
-              display: "flex",
-              alignItems: "center",
-              gap: "2px",
-            }}
-          >
-            <img
-              src={dateIcon}
-              alt=""
-              style={{
-                height: "15px",
-                width: "15px",
-              }}
-            />{" "}
-            Joined on September 2025
-          </div>
-          <div style={{ display: "flex", gap: "10px", color: "grey" }}>
-            <div>1 follwoing</div>
-            <div> 0 followers</div>
-          </div>
-
-          {/* //another */}
-          <div
-            style={{
-              display: "flex",
-              gap: "20px",
-              marginTop: "15px",
-            }}
-          >
-            <button
-              style={{
-                width: "8vw",
-                height: "2.4em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-                gap: "2px",
-              }}
-            >
-              follow
-              <img src={createIcon} alt="" style={{}} />
-            </button>
-            <Link
-              to="/home/profile"
-              style={{
-                width: "8vw",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textDecoration: "none",
-              }}
-            >
-              view
-            </Link>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
 
-export default FindFollowers;
+export default AllUsers;

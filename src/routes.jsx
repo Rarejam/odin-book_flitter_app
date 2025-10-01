@@ -77,7 +77,7 @@ const routes = [
         element: <Settings />,
       },
       {
-        path: "/home/comment",
+        path: "/home/comment/:id",
         element: <CommentPost />,
       },
     ],

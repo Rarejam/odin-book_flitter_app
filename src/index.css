@@ -669,7 +669,7 @@ body.dark-mode .second-slide > div:hover {
 
 .upload-label:hover {
   background: #0d8ddb;
-  transform: scale(1.2);
+  scale: 1.2;
 }
 
 .upload-label:active {

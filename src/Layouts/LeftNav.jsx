@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import flitterIcon from "../assets/flitterIcon.svg";
 import HomeIcon from "../assets/home.svg";
 import profileIcon from "../assets/person.svg";
@@ -6,24 +6,68 @@ import settingsIcon from "../assets/settings.svg";
 import logOutIcon from "../assets/logOut.svg";
 import findIcon from "../assets/find_user.svg";
 import nodeIcon from "../assets/node.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const LeftNav = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [username, setUsername] = useState("*****");
+  const [userEmail, setUserEmail] = useState("**********");
+
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      if (!token) {
+        navigate("/login");
+      }
+      try {
+        const res = await axios.get("http://localhost:3000/api/user", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setUsername(res.data.username);
+        setUserEmail(res.data.email);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUserDetails();
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle("dark-mode");
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <div className="left-nav">
-      <div className="left-div">
+      <div className="left-div" style={{ display: "flex" }}>
         Flitter
         <img
           src={flitterIcon}
           style={{ marginLeft: "5px", height: "30px", width: "30px" }}
           alt=""
         />
+        <button
+          onClick={toggleTheme}
+          className="theme-toggle"
+          style={{ marginLeft: "50px" }}
+        >
+          {darkMode ? "☀️" : "🌙  "}
+        </button>
       </div>
 
       <div className="username">
@@ -31,8 +75,8 @@ const LeftNav = () => {
           <img src={nodeIcon} alt="user avatar" />
         </div>
         <div>
-          <div>Jamal</div>
-          <div style={{ fontSize: "14px" }}>@rarejamthegoat</div>
+          <div>{username}</div>
+          <div style={{ fontSize: "14px" }}>{userEmail}</div>
         </div>
       </div>
 
@@ -124,7 +168,7 @@ const LeftNav = () => {
         </Link>
 
         <button onClick={toggleTheme} className="theme-toggle">
-          {darkMode ? "🌙 Dark mode" : "☀️ Light mode"}
+          {darkMode ? "☀️ Light mode " : "🌙 Dark mode "}
         </button>
         <Link
           to="https://github.com/Rarejam/odin-book_flitter_app"
@@ -149,7 +193,7 @@ const LeftNav = () => {
           Github
         </Link>
         <Link
-          to="/"
+          onClick={handleLogout}
           className="nav-link"
           style={{
             display: "flex",
