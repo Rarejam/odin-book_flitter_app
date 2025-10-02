@@ -1,32 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import flitterIcon from "../assets/flitterIcon.svg";
-import commentIcon from "../assets/Comments.svg";
 import likeIcon from "../assets/like.svg";
 import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Posts = () => {
+const ProfileComments = () => {
   const token = localStorage.getItem("token");
-  const [followingPosts, setFollowingPosts] = useState([]);
+  const [userComments, setUserComments] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const { profileId } = useParams();
+
   useEffect(() => {
-    const getUserPosts = async () => {
+    const getUserComments = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/api/user/following",
+          `http://localhost:3000/api/profile/${profileId}/comments`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        setFollowingPosts(data);
+        setUserComments(data);
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.log(error);
       } finally {
         setLoading(false);
       }
     };
-    getUserPosts();
+    getUserComments();
   }, [token]);
 
   if (loading) {
@@ -41,12 +42,12 @@ const Posts = () => {
           fontSize: "24px",
         }}
       >
-        Loading posts...
+        Loading Comments...
       </div>
     );
   }
 
-  if (followingPosts.length === 0) {
+  if (userComments.length === 0) {
     return (
       <div
         style={{
@@ -58,22 +59,22 @@ const Posts = () => {
           fontSize: "24px",
         }}
       >
-        No Posts Found
+        No Comments Found
       </div>
     );
   }
 
   return (
     <div className="profile-post-div">
-      {followingPosts.map((post) => (
-        <div key={post.id} className="post-container">
+      {userComments.map((comment) => (
+        <div key={comment.id} className="post-container">
           <div>
             <Link
-              to={`/home/profile/${post.author?.id}`}
+              to={`/home/profile/${comment.author?.id}`}
               className="post-profile"
             >
               <img
-                src={post.author?.profileImage || flitterIcon}
+                src={comment.author?.profileImage || flitterIcon}
                 alt="profile"
                 style={{
                   width: "100%",
@@ -94,11 +95,11 @@ const Posts = () => {
                 }}
               >
                 <Link
-                  to={`/home/profile/${post.author?.id}`}
+                  to={`/home/profile/${comment.author?.id}`}
                   className="post-username"
                   style={{ color: "grey" }}
                 >
-                  {post.author?.username || "Unknown"}
+                  {comment.author?.username || "Unknown"}
                 </Link>
                 <div
                   style={{
@@ -107,7 +108,7 @@ const Posts = () => {
                     color: "grey",
                   }}
                 >
-                  {post.author?.email || "no-email"}
+                  {comment.author?.email || "no-email"}
                 </div>
                 <div
                   style={{
@@ -118,27 +119,11 @@ const Posts = () => {
                   •
                 </div>
                 <div style={{ color: "grey" }}>
-                  {new Date(post.createdAt).toLocaleString()}
+                  {new Date(comment.createdAt).toLocaleString()}
                 </div>
               </div>
 
-              <div className="post-text">
-                {post.content}
-                {post.postImage && (
-                  <div className="post-text-image">
-                    <img
-                      src={post.postImage}
-                      alt=""
-                      style={{
-                        minHeight: "100%",
-                        width: "100%",
-                        borderRadius: "5px",
-                        boxShadow: "0px 0px 4px grey",
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
+              <div className="post-text">{comment.content}</div>
             </div>
 
             <div className="post-follow-btn">
@@ -160,34 +145,16 @@ const Posts = () => {
 
           <div className="post-bottom">
             <div>
-              <Link
-                style={{
-                  display: "flex",
-                  textDecoration: "none",
-                  alignItems: "center",
-                }}
-                to={`/home/comment/${post.id}`}
-              >
-                <img src={commentIcon} alt="comments" />
-                <div
-                  style={{ marginLeft: "5px", fontSize: "18px", color: "grey" }}
-                >
-                  {post.comments?.length || 0}
-                </div>
-              </Link>
-            </div>
-
-            <div>
               <img src={likeIcon} alt="like" />
               <div style={{ marginLeft: "5px", fontSize: "18px" }}>
-                {post.likes?.length || 0}
+                {comment.likes?.length || 0}
               </div>
             </div>
 
             <div>
               <img src={reshareIcon} alt="reshare" />
               <div style={{ marginLeft: "5px", fontSize: "18px" }}>
-                {post.shares?.length || 0}
+                {comment.shares?.length || 0}
               </div>
             </div>
 
@@ -201,4 +168,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default ProfileComments;

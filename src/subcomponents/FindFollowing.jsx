@@ -303,22 +303,30 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import flitterIcon from "../assets/flitterIcon.svg";
 import dateIcon from "../assets/calender.svg";
-import { Link } from "react-router-dom";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
-
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const queryUsers = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/all-users");
+        setLoading(true);
+        const { data } = await axios.get(
+          "http://localhost:3000/api/user/following-users",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
       }
     };
     queryUsers();
-  }, []);
+  }, [token]);
 
   const toggleFollow = (id) => {
     setUsers(
@@ -327,6 +335,37 @@ const AllUsers = () => {
       )
     );
   };
+  if (loading == true) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          fontSize: "24px",
+        }}
+      >
+        Loading...
+      </div>
+    );
+  }
+
+  if (users.length == 0) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          fontSize: "24px",
+        }}
+      >
+        No Users Found
+      </div>
+    );
+  }
   return (
     <div className="users-div">
       {users.map((user) => (
@@ -338,8 +377,8 @@ const AllUsers = () => {
                   src={user.profileImage || flitterIcon} // ✅ real image with fallback
                   alt={user.username}
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "100%",
+                    height: "100%",
                     borderRadius: "50%",
                     objectFit: "cover",
                   }}

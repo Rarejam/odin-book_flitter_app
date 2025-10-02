@@ -1,10 +1,88 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ArrowIcon from "../assets/arrow.svg";
 import eyeIcon from "../assets/eye.png";
 import { useState } from "react";
+import axios from "axios";
 
 const Settings = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
+  const [password, setPassword] = useState("");
+  const [successful, setSuccessful] = useState("");
+  const [err, setErr] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  const token = localStorage.getItem("token");
+  const naviagte = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Only include fields with values
+    const formData = {};
+    if (username) formData.username = username;
+    if (email) formData.email = email;
+    if (bio) formData.bio = bio;
+    if (password) formData.password = password;
+
+    // If nothing to update
+    if (Object.keys(formData).length === 0) {
+      setErr("Please update at least one field.");
+      setSuccessful("");
+      return;
+    }
+
+    setErr(""); // clear previous errors
+    try {
+      setSaving(false);
+      const res = await axios.put(
+        "http://localhost:3000/api/update-user",
+        formData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setBio("");
+      if (res.status == 200) {
+        setSuccessful("Successfully Updated");
+        setUsername("");
+        setEmail("");
+        setBio("");
+        setPassword("");
+      }
+    } catch (error) {
+      console.log(error);
+      setErr(
+        "Update failed. Please try again.(email already exists and unique)"
+      );
+      setSuccessful("");
+    } finally {
+      setSaving(false);
+    }
+  };
+  //to delete user
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+    setDeleting(true);
+    try {
+      const res = await axios.delete("http://localhost:3000/api/delete-user", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.status === 200) {
+        naviagte("/");
+      }
+    } catch (error) {
+      console.log(error);
+      setErr("Could'nt delete");
+    } finally {
+      setDeleting(false);
+    }
+  };
   return (
     <div>
       <div className="settings-header">
@@ -34,15 +112,40 @@ const Settings = () => {
             />
           </div>
         </form>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            fontSize: "20px",
+            marginBottom: "10px",
+          }}
+        >
+          <span style={{ color: "red", marginRight: "10px" }}>{err}</span>
+          <span style={{ color: "green" }}>{successful}</span>
+        </div>
 
-        <form className="settings-second-form">
+        <form className="settings-second-form" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="username">Username</label>
-            <input type="text" id="username" placeholder="update username" />
+            <input
+              type="text"
+              id="username"
+              placeholder="update username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
           <div>
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" placeholder="update email" />
+            <input
+              type="email"
+              id="email"
+              placeholder="update email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="bio-textarea-div">
             <label htmlFor="bio">Bio</label>
@@ -51,17 +154,20 @@ const Settings = () => {
               id="bio"
               placeholder="update bio"
               className="bio-textarea"
+              name="bio"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
             />
           </div>
-          <div>
+          <div style={{ position: "relative" }}>
             <label htmlFor="password">Password</label>
             <input
-              type={showPassword == true ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               id="password"
               placeholder="update password or leave empty"
-              style={{
-                position: "relative",
-              }}
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <img
               onClick={() => setShowPassword(!showPassword)}
@@ -72,17 +178,23 @@ const Settings = () => {
                 height: "26px",
                 width: "26px",
                 right: "3%",
-                top: "56%",
+                top: "50%",
+                cursor: "pointer",
+                transform: "translateY(-50%)",
               }}
             />
           </div>
-          <button>Save Changes</button>
+          <button type="submit" disabled={saving}>
+            {saving ? "updating" : "Save Changes"}
+          </button>
           <button
             style={{
               backgroundColor: "rgb(252, 52, 52)",
             }}
+            onClick={handleDeleteUser}
+            disabled={deleting}
           >
-            Delete User
+            {deleting ? "deleting" : "Delete User"}
           </button>
         </form>
       </div>

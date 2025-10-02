@@ -10,8 +10,9 @@ import { useEffect, useState } from "react";
 const HomeDiscover = () => {
   const [posts, setPosts] = useState([]);
   const [postText, setPostText] = useState("");
-  const [loadingPosts, setLoadingPosts] = useState(false); // for fetching
-  const [posting, setPosting] = useState(false); // for creating a post
+  const [loadingPosts, setLoadingPosts] = useState(false);
+  const [posting, setPosting] = useState(false);
+  const [LoggedUser, setLoggedUser] = useState("");
   const token = localStorage.getItem("token");
 
   // fetch posts
@@ -31,7 +32,20 @@ const HomeDiscover = () => {
     };
     fetchPosts();
   }, [token]);
-
+  //get profileImage 0f the current logged-In user
+  useEffect(() => {
+    const getUserPrfoileImage = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/api/user", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLoggedUser(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUserPrfoileImage();
+  }, [token]);
   // create post
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,7 +88,7 @@ const HomeDiscover = () => {
             }}
           >
             <img
-              src={flitterIcon}
+              src={LoggedUser.profileImage || flitterIcon}
               alt="profile"
               style={{ height: "50px", width: "50px", borderRadius: "50%" }}
             />
@@ -90,11 +104,23 @@ const HomeDiscover = () => {
                 onChange={(e) => setPostText(e.target.value)}
               ></textarea>
 
+              {/* Upload inside SAME form */}
+              <label htmlFor="post_image" className="upload-label">
+                Upload File or Image
+              </label>
+              <input
+                type="file"
+                id="post_image"
+                name="post_image"
+                className="upload-input"
+              />
+
               <button
-                className="upload-label"
+                className="post-btn"
                 type="submit"
                 style={{
                   marginTop: "10px",
+                  marginLeft: "50%",
                   border: "none",
                   opacity: posting ? 0.6 : 1,
                   cursor: posting ? "not-allowed" : "pointer",
@@ -106,28 +132,35 @@ const HomeDiscover = () => {
             </form>
           </div>
         </div>
-
-        <div className="post-bottom-div">
-          <form className="settings-first-form">
-            <label htmlFor="post_image" className="upload-label">
-              Upload File or Image
-            </label>
-            <input
-              type="file"
-              id="post_image"
-              name="post_image"
-              className="upload-input"
-            />
-          </form>
-        </div>
       </div>
 
       {/* Posts */}
       <div>
         {loadingPosts ? (
-          <p style={{ textAlign: "center" }}>Loading posts...</p>
+          <p
+            style={{
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "80vh",
+              fontSize: "24px",
+            }}
+          >
+            Loading posts...
+          </p>
         ) : posts.length === 0 ? (
-          <p style={{ textAlign: "center" }}>No posts yet</p>
+          <p
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "80vh",
+              fontSize: "24px",
+            }}
+          >
+            No posts yet
+          </p>
         ) : (
           posts.map((post) => (
             <div key={post.id} className="post-container">
@@ -136,7 +169,12 @@ const HomeDiscover = () => {
                   <img
                     src={post.author?.profileImage || flitterIcon}
                     alt="profile"
-                    style={{ height: "40px", width: "40px" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
                   />
                 </Link>
 

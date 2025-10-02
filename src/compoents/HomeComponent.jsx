@@ -1,5 +1,4 @@
 import { Link, Outlet } from "react-router-dom";
-import ArrowIcon from "../assets/arrow.svg";
 
 const HomeComponent = () => {
   return (

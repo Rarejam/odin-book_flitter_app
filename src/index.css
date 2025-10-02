@@ -676,6 +676,29 @@ body.dark-mode .second-slide > div:hover {
   background: #0b76b5;
   transform: scale(1);
 }
+.post-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background: #1da1f2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.post-btn:hover {
+  background: #0d8ddb;
+  scale: 1.2;
+}
+
+.post-btn:active {
+  background: #0b76b5;
+  transform: scale(1);
+}
 .settings-first-form {
   /* background-color: red; */
   display: flex;

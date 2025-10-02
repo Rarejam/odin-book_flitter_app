@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import flitterIcon from "../assets/flitterIcon.svg";
 import commentIcon from "../assets/Comments.svg";
 import likeIcon from "../assets/like.svg";
@@ -7,16 +7,18 @@ import deleteIcon from "../assets/delete.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Posts = () => {
+const ProfileFollowing = () => {
   const token = localStorage.getItem("token");
   const [followingPosts, setFollowingPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { profileId } = useParams();
 
   useEffect(() => {
     const getUserPosts = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/api/user/following",
+          `http://localhost:3000/api/profile/${profileId}/following/posts`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setFollowingPosts(data);
@@ -201,4 +203,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default ProfileFollowing;

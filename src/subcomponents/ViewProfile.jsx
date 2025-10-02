@@ -1,24 +1,30 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import ArrowIcon from "../assets/arrow.svg";
 import flitterIcon from "../assets/flitterIcon.svg";
 import dateIcon from "../assets/calender.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Profile = () => {
+const ViewProfile = () => {
   const token = localStorage.getItem("token");
   const [user, setUser] = useState("");
+
+  const { profileId } = useParams();
+
   useEffect(() => {
     const getUserInfo = async () => {
-      const { data } = await axios.get("http://localhost:3000/api/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const { data } = await axios.get(
+        `http://localhost:3000/api/profile/${profileId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setUser(data);
     };
     getUserInfo();
-  }, [token]);
+  }, [token, profileId]);
   if (!user) {
     return (
       <div
@@ -97,13 +103,19 @@ const Profile = () => {
           </div>
 
           <div className="profile-nav">
-            <Link to="/home/profile/" className="profile-link">
+            <Link to={`/home/profile/${profileId}`} className="profile-link">
               Posts
             </Link>
-            <Link to="/home/profile/comments" className="profile-link">
+            <Link
+              to={`/home/profile/${profileId}/comments`}
+              className="profile-link"
+            >
               Comments
             </Link>
-            <Link to="/home/profile/following" className="profile-link">
+            <Link
+              to={`/home/profile/${profileId}/following`}
+              className="profile-link"
+            >
               Following
             </Link>
           </div>
@@ -116,4 +128,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ViewProfile;

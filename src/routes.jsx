@@ -3,6 +3,9 @@ import FindUsers from "./compoents/FindUsers";
 import HomeComponent from "./compoents/HomeComponent";
 import Profile from "./compoents/Profile";
 import Settings from "./compoents/Settings";
+import ProfileComments from "./profile/ProfileComments";
+import ProfileFollowing from "./profile/ProfileFollowing";
+import ProfilePosts from "./profile/ProfilePosts";
 import App from "./routes/App";
 import Index from "./routes/Index";
 import Login from "./routes/login";
@@ -15,6 +18,7 @@ import Following from "./subcomponents/Following";
 import HomeDiscover from "./subcomponents/HomeDiscover";
 import HomeFollowing from "./subcomponents/HomeFollowing";
 import Posts from "./subcomponents/Posts";
+import ViewProfile from "./subcomponents/ViewProfile";
 
 const routes = [
   {
@@ -70,6 +74,15 @@ const routes = [
             path: "following",
             element: <Following />,
           },
+        ],
+      },
+      {
+        path: "profile/:profileId",
+        element: <ViewProfile />,
+        children: [
+          { index: true, element: <ProfilePosts /> },
+          { path: "comments", element: <ProfileComments /> },
+          { path: "following", element: <ProfileFollowing /> },
         ],
       },
       {

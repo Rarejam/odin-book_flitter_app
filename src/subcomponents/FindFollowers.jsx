@@ -1,9 +1,8 @@
 // import flitterIcon from "../assets/flitterIcon.svg";
 // import dateIcon from "../assets/calender.svg";
 // import { Link } from "react-router-dom";
-// import createIcon from "../assets/create.svg";
 
-// const FindFollowers = () => {
+// const FindFollowing = () => {
 //   return (
 //     <div className="users-div">
 //       {/* another user */}
@@ -53,23 +52,16 @@
 //             <button
 //               style={{
 //                 width: "8vw",
-//                 height: "2.4em",
+//                 height: "2em",
 //                 border: "none",
 //                 borderRadius: "8px",
 //                 backgroundColor: "#1da1f2",
 //                 color: "white",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textDecoration: "none",
-//                 gap: "2px",
 //               }}
 //             >
 //               follow
-//               <img src={createIcon} alt="" style={{}} />
 //             </button>
-//             <Link
-//               to="/home/profile"
+//             <button
 //               style={{
 //                 width: "8vw",
 //                 height: "2em",
@@ -77,14 +69,10 @@
 //                 borderRadius: "8px",
 //                 backgroundColor: "#1da1f2",
 //                 color: "white",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textDecoration: "none",
 //               }}
 //             >
-//               view
-//             </Link>
+//               follow
+//             </button>
 //           </div>
 //         </div>
 //       </div>
@@ -136,23 +124,16 @@
 //             <button
 //               style={{
 //                 width: "8vw",
-//                 height: "2.4em",
+//                 height: "2em",
 //                 border: "none",
 //                 borderRadius: "8px",
 //                 backgroundColor: "#1da1f2",
 //                 color: "white",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textDecoration: "none",
-//                 gap: "2px",
 //               }}
 //             >
 //               follow
-//               <img src={createIcon} alt="" style={{}} />
 //             </button>
-//             <Link
-//               to="/home/profile"
+//             <button
 //               style={{
 //                 width: "8vw",
 //                 height: "2em",
@@ -160,14 +141,10 @@
 //                 borderRadius: "8px",
 //                 backgroundColor: "#1da1f2",
 //                 color: "white",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textDecoration: "none",
 //               }}
 //             >
-//               view
-//             </Link>
+//               follow
+//             </button>
 //           </div>
 //         </div>
 //       </div>
@@ -220,23 +197,16 @@
 //             <button
 //               style={{
 //                 width: "8vw",
-//                 height: "2.4em",
+//                 height: "2em",
 //                 border: "none",
 //                 borderRadius: "8px",
 //                 backgroundColor: "#1da1f2",
 //                 color: "white",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textDecoration: "none",
-//                 gap: "2px",
 //               }}
 //             >
 //               follow
-//               <img src={createIcon} alt="" style={{}} />
 //             </button>
-//             <Link
-//               to="/home/profile"
+//             <button
 //               style={{
 //                 width: "8vw",
 //                 height: "2em",
@@ -244,14 +214,10 @@
 //                 borderRadius: "8px",
 //                 backgroundColor: "#1da1f2",
 //                 color: "white",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textDecoration: "none",
 //               }}
 //             >
-//               view
-//             </Link>
+//               follow
+//             </button>
 //           </div>
 //         </div>
 //       </div>
@@ -303,23 +269,16 @@
 //             <button
 //               style={{
 //                 width: "8vw",
-//                 height: "2.4em",
+//                 height: "2em",
 //                 border: "none",
 //                 borderRadius: "8px",
 //                 backgroundColor: "#1da1f2",
 //                 color: "white",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textDecoration: "none",
-//                 gap: "2px",
 //               }}
 //             >
 //               follow
-//               <img src={createIcon} alt="" style={{}} />
 //             </button>
-//             <Link
-//               to="/home/profile"
+//             <button
 //               style={{
 //                 width: "8vw",
 //                 height: "2em",
@@ -327,14 +286,10 @@
 //                 borderRadius: "8px",
 //                 backgroundColor: "#1da1f2",
 //                 color: "white",
-//                 display: "flex",
-//                 alignItems: "center",
-//                 justifyContent: "center",
-//                 textDecoration: "none",
 //               }}
 //             >
-//               view
-//             </Link>
+//               follow
+//             </button>
 //           </div>
 //         </div>
 //       </div>
@@ -342,28 +297,36 @@
 //   );
 // };
 
-// export default FindFollowers;
+// export default FindFollowing;
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import flitterIcon from "../assets/flitterIcon.svg";
 import dateIcon from "../assets/calender.svg";
-import { Link } from "react-router-dom";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
-
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const queryUsers = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/all-users");
+        setLoading(true);
+        const { data } = await axios.get(
+          "http://localhost:3000/api/user/follower-users",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
       }
     };
     queryUsers();
-  }, []);
+  }, [token]);
 
   const toggleFollow = (id) => {
     setUsers(
@@ -372,6 +335,36 @@ const AllUsers = () => {
       )
     );
   };
+  if (loading == true) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          fontSize: "24px",
+        }}
+      >
+        Loading...
+      </div>
+    );
+  }
+  if (users.length == 0) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          fontSize: "24px",
+        }}
+      >
+        No Users Found
+      </div>
+    );
+  }
   return (
     <div className="users-div">
       {users.map((user) => (
@@ -383,8 +376,8 @@ const AllUsers = () => {
                   src={user.profileImage || flitterIcon} // ✅ real image with fallback
                   alt={user.username}
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "100%",
+                    height: "100%",
                     borderRadius: "50%",
                     objectFit: "cover",
                   }}

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import flitterIcon from "../assets/flitterIcon.svg";
 import commentIcon from "../assets/Comments.svg";
 import likeIcon from "../assets/like.svg";
@@ -7,19 +7,21 @@ import deleteIcon from "../assets/delete.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Posts = () => {
+const ProfilePosts = () => {
   const token = localStorage.getItem("token");
-  const [followingPosts, setFollowingPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { profileId } = useParams();
 
   useEffect(() => {
     const getUserPosts = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/api/user/following",
+          `http://localhost:3000/api/profile/${profileId}/posts`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        setFollowingPosts(data);
+        setUserPosts(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       } finally {
@@ -27,7 +29,7 @@ const Posts = () => {
       }
     };
     getUserPosts();
-  }, [token]);
+  }, [token, profileId]);
 
   if (loading) {
     return (
@@ -46,7 +48,7 @@ const Posts = () => {
     );
   }
 
-  if (followingPosts.length === 0) {
+  if (userPosts.length === 0) {
     return (
       <div
         style={{
@@ -65,7 +67,7 @@ const Posts = () => {
 
   return (
     <div className="profile-post-div">
-      {followingPosts.map((post) => (
+      {userPosts.map((post) => (
         <div key={post.id} className="post-container">
           <div>
             <Link
@@ -201,4 +203,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default ProfilePosts;

@@ -1,462 +1,167 @@
 import { Link } from "react-router-dom";
 import flitterIcon from "../assets/flitterIcon.svg";
-import commentIcon from "../assets/Comments.svg";
 import likeIcon from "../assets/like.svg";
 import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Comments = () => {
+  const token = localStorage.getItem("token");
+  const [userComments, setUserComments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getUserComments = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:3000/api/user/comments",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setUserComments(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getUserComments();
+  }, [token]);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "40vh",
+          fontSize: "24px",
+        }}
+      >
+        Loading Comments...
+      </div>
+    );
+  }
+
+  if (userComments.length === 0) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "40vh",
+          fontSize: "24px",
+        }}
+      >
+        No Comments Found
+      </div>
+    );
+  }
+
   return (
     <div className="profile-post-div">
-      {/* new comment */}
-      <div className="post-container">
-        <div>
-          <Link to="/home/profile" className="post-profile">
-            <img
-              src={flitterIcon}
-              alt=""
-              style={{
-                height: "40px",
-                width: "40px",
-              }}
-            />
-          </Link>
-          <div className="post-content">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
-                // backgroundColor: "red",
-              }}
-            >
-              <Link
-                to="/home/profile"
-                className="post-username"
-                style={{ color: "grey" }}
-              >
-                Rarajam
-              </Link>
-              <div
-                style={{ fontSize: "13px", fontStyle: "italic", color: "grey" }}
-              >
-                @agarajamaldeen4ce96c
-              </div>{" "}
-              <div
-                style={{
-                  paddingBottom: "4.5px",
-                }}
-              >
-                .
-              </div>
-              <div style={{ color: "grey" }}>30days</div>
-            </div>
-            <div className="post-text">
-              this is what i was telling bro about that he was now telling me
-              nonesense shey e no get sense this is what i was telling bro about
-              that he was now telling me nonesense shey e no get sense
-            </div>
-          </div>
-          <div className="post-follow-btn">
-            <button
-              style={{
-                width: "175%",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-
-                color: "white",
-              }}
-            >
-              follow
-            </button>
-          </div>
-        </div>
-
-        <div className="post-bottom">
+      {userComments.map((comment) => (
+        <div key={comment.id} className="post-container">
           <div>
             <Link
-              style={{
-                display: "flex",
-                textDecoration: "none",
-                alignItems: "center",
-              }}
-              to="/home/comment"
+              to={`/home/profile/${comment.author?.id}`}
+              className="post-profile"
             >
-              {" "}
-              <img src={commentIcon} alt="" />
+              <img
+                src={comment.author?.profileImage || flitterIcon}
+                alt="profile"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            </Link>
+
+            <div className="post-content">
               <div
                 style={{
-                  marginLeft: "5px",
-                  fontSize: "18px",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  gap: "10px",
+                  marginTop: "10px",
                 }}
               >
-                <div style={{ color: "white" }}>1</div>
+                <Link
+                  to={`/home/profile/${comment.author?.id}`}
+                  className="post-username"
+                  style={{ color: "grey" }}
+                >
+                  {comment.author?.username || "Unknown"}
+                </Link>
+                <div
+                  style={{
+                    fontSize: "13px",
+                    fontStyle: "italic",
+                    color: "grey",
+                  }}
+                >
+                  {comment.author?.email || "no-email"}
+                </div>
+                <div
+                  style={{
+                    paddingBottom: "4.5px",
+                    verticalAlign: "end",
+                  }}
+                >
+                  •
+                </div>
+                <div style={{ color: "grey" }}>
+                  {new Date(comment.createdAt).toLocaleString()}
+                </div>
               </div>
-            </Link>{" "}
-          </div>
-          <div>
-            <img src={likeIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={reshareIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={deleteIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
-          </div>
-        </div>
-      </div>
 
-      {/* //new comment */}
-      <div className="post-container">
-        <div>
-          <Link to="/home/profile" className="post-profile">
-            <img
-              src={flitterIcon}
-              alt=""
-              style={{
-                height: "40px",
-                width: "40px",
-              }}
-            />
-          </Link>
-          <div className="post-content">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
-                // backgroundColor: "red",
-              }}
-            >
-              <Link
-                to="/home/profile"
-                className="post-username"
-                style={{ color: "grey" }}
-              >
-                Rarajam
-              </Link>
-              <div
-                style={{ fontSize: "13px", fontStyle: "italic", color: "grey" }}
-              >
-                @agarajamaldeen4ce96c
-              </div>{" "}
-              <div
+              <div className="post-text">{comment.content}</div>
+            </div>
+
+            <div className="post-follow-btn">
+              <button
                 style={{
-                  paddingBottom: "4.5px",
+                  width: "175%",
+                  height: "2em",
+                  border: "none",
+                  borderRadius: "8px",
+                  backgroundColor: "#1da1f2",
+                  color: "white",
+                  marginTop: "20px",
                 }}
               >
-                .
+                follow
+              </button>
+            </div>
+          </div>
+
+          <div className="post-bottom">
+            <div>
+              <img src={likeIcon} alt="like" />
+              <div style={{ marginLeft: "5px", fontSize: "18px" }}>
+                {comment.likes?.length || 0}
               </div>
-              <div style={{ color: "grey" }}>30days</div>
             </div>
-            <div className="post-text">
-              this is what i was telling bro about that he was now telling me
-              nonesense shey e no get sense this is what i was telling bro about
-              that he was now telling me nonesense shey e no get sense
-            </div>
-          </div>
-          <div className="post-follow-btn">
-            <button
-              style={{
-                width: "175%",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
 
-                color: "white",
-              }}
-            >
-              follow
-            </button>
-          </div>
-        </div>
-
-        <div className="post-bottom">
-          <div>
-            <img src={commentIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={likeIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={reshareIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={deleteIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
-          </div>
-        </div>
-      </div>
-      {/* new comment */}
-      <div className="post-container">
-        <div>
-          <Link to="/home/profile" className="post-profile">
-            <img
-              src={flitterIcon}
-              alt=""
-              style={{
-                height: "40px",
-                width: "40px",
-              }}
-            />
-          </Link>
-          <div className="post-content">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
-                // backgroundColor: "red",
-              }}
-            >
-              <Link
-                to="/home/profile"
-                className="post-username"
-                style={{ color: "grey" }}
-              >
-                Rarajam
-              </Link>
-              <div
-                style={{ fontSize: "13px", fontStyle: "italic", color: "grey" }}
-              >
-                @agarajamaldeen4ce96c
-              </div>{" "}
-              <div
-                style={{
-                  paddingBottom: "4.5px",
-                }}
-              >
-                .
+            <div>
+              <img src={reshareIcon} alt="reshare" />
+              <div style={{ marginLeft: "5px", fontSize: "18px" }}>
+                {comment.shares?.length || 0}
               </div>
-              <div style={{ color: "grey" }}>30days</div>
             </div>
-            <div className="post-text">
-              this is what i was telling bro about that he was now telling me
-              nonesense shey e no get sense this is what i was telling bro about
-              that he was now telling me nonesense shey e no get sense
+
+            <div>
+              <img src={deleteIcon} alt="delete" />
             </div>
           </div>
-          <div className="post-follow-btn">
-            <button
-              style={{
-                width: "175%",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-
-                color: "white",
-              }}
-            >
-              follow
-            </button>
-          </div>
         </div>
-
-        <div className="post-bottom">
-          <div>
-            <img src={commentIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={likeIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={reshareIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={deleteIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
-          </div>
-        </div>
-      </div>
-
-      {/* //new comment */}
-      <div className="post-container">
-        <div>
-          <Link to="/home/profile" className="post-profile">
-            <img
-              src={flitterIcon}
-              alt=""
-              style={{
-                height: "40px",
-                width: "40px",
-              }}
-            />
-          </Link>
-          <div className="post-content">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
-                // backgroundColor: "red",
-              }}
-            >
-              <Link
-                to="/home/profile"
-                className="post-username"
-                style={{ color: "grey" }}
-              >
-                Rarajam
-              </Link>
-              <div
-                style={{ fontSize: "13px", fontStyle: "italic", color: "grey" }}
-              >
-                @agarajamaldeen4ce96c
-              </div>{" "}
-              <div
-                style={{
-                  paddingBottom: "4.5px",
-                }}
-              >
-                .
-              </div>
-              <div style={{ color: "grey" }}>30days</div>
-            </div>
-            <div className="post-text">
-              this is what i was telling bro about that he was now telling me
-              nonesense shey e no get sense this is what i was telling bro about
-              that he was now telling me nonesense shey e no get sense
-            </div>
-          </div>
-          <div className="post-follow-btn">
-            <button
-              style={{
-                width: "175%",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-
-                color: "white",
-              }}
-            >
-              follow
-            </button>
-          </div>
-        </div>
-
-        <div className="post-bottom">
-          <div>
-            <img src={commentIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={likeIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={reshareIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={deleteIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
-          </div>
-        </div>
-      </div>
-      {/* new comment */}
-      <div className="post-container">
-        <div>
-          <Link to="/home/profile" className="post-profile">
-            <img
-              src={flitterIcon}
-              alt=""
-              style={{
-                height: "40px",
-                width: "40px",
-              }}
-            />
-          </Link>
-          <div className="post-content">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
-                // backgroundColor: "red",
-              }}
-            >
-              <Link
-                to="/home/profile"
-                className="post-username"
-                style={{ color: "grey" }}
-              >
-                Rarajam
-              </Link>
-              <div
-                style={{ fontSize: "13px", fontStyle: "italic", color: "grey" }}
-              >
-                @agarajamaldeen4ce96c
-              </div>{" "}
-              <div
-                style={{
-                  paddingBottom: "4.5px",
-                }}
-              >
-                .
-              </div>
-              <div style={{ color: "grey" }}>30days</div>
-            </div>
-            <div className="post-text">
-              this is what i was telling bro about that he was now telling me
-              nonesense shey e no get sense this is what i was telling bro about
-              that he was now telling me nonesense shey e no get sense
-            </div>
-          </div>
-          <div className="post-follow-btn">
-            <button
-              style={{
-                width: "175%",
-                height: "2em",
-                border: "none",
-                borderRadius: "8px",
-                backgroundColor: "#1da1f2",
-
-                color: "white",
-              }}
-            >
-              follow
-            </button>
-          </div>
-        </div>
-
-        <div className="post-bottom">
-          <div>
-            <img src={commentIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={likeIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={reshareIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
-          </div>
-          <div>
-            <img src={deleteIcon} alt="" />
-            <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
