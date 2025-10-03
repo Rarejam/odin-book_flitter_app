@@ -65,7 +65,7 @@ const Comments = () => {
   return (
     <div className="profile-post-div">
       {userComments.map((comment) => (
-        <div key={comment.id} className="post-container">
+        <div key={comment.id} className="post-container scroll-animate">
           <div>
             <Link
               to={`/home/profile/${comment.author?.id}`}

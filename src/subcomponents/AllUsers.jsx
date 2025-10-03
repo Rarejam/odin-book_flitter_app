@@ -65,7 +65,7 @@ const AllUsers = () => {
   return (
     <div className="users-div">
       {users.map((user) => (
-        <div className="user" key={user.id}>
+        <div className="user scroll-animate " key={user.id}>
           <div className="profile">
             {/* profile pic */}
             <div className="profile-pic-div">

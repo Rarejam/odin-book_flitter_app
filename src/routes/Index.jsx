@@ -11,7 +11,11 @@ const Index = () => {
   };
 
   return (
-    <div className={`index-container ${darkMode ? "dark" : "light"}`}>
+    <div
+      className={`index-container scroll-animate ${
+        darkMode ? "dark" : "light"
+      }`}
+    >
       <div className="index-header">
         <div
           style={{

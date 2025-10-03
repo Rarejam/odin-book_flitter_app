@@ -50,7 +50,7 @@ const Profile = () => {
       </div>
 
       <div className="settings-content">
-        <div className="profile">
+        <div className="profile scroll-animate">
           <div className="profile-pic-div">
             <div className="profile-picture">
               <img

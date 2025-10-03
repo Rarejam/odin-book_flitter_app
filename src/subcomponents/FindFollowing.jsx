@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import flitterIcon from "../assets/flitterIcon.svg";
 import dateIcon from "../assets/calender.svg";
+import { Link } from "react-router-dom";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -68,7 +69,7 @@ const AllUsers = () => {
   return (
     <div className="users-div">
       {users.map((user) => (
-        <div className="user" key={user.id}>
+        <div className="user scroll-animate" key={user.id}>
           <div className="profile">
             <div className="profile-pic-div">
               <div className="profile-picture">

@@ -15,6 +15,7 @@ const CommentPost = () => {
   const [reply, setReply] = useState("");
   const [posting, setPosting] = useState(false);
   const [userImage, setUserImage] = useState("");
+  const [userId, setUserId] = useState("");
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const CommentPost = () => {
       }
     };
     fetchPostWithComments();
-  }, [id]);
+  }, [id, token]);
 
   useEffect(() => {
     const findUserImage = async () => {
@@ -41,6 +42,7 @@ const CommentPost = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserImage(data.profileImage);
+        setUserId(data.id);
       } catch (error) {
         console.log(error);
       }
@@ -86,6 +88,30 @@ const CommentPost = () => {
       setPosting(false);
     }
   }
+  const handleDelete = async ({ authorId, commentId }) => {
+    if (authorId !== userId) {
+      alert("cannot delete comment of others");
+    } else if (authorId == userId) {
+      try {
+        const res = await axios.delete(
+          `http://localhost:3000/api/comments/${commentId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        // if their commetnID is not equal to commetnId then that true so they can go to the new array
+        // else thats false and thay are pushed out and nvr go to the new array
+        if (res.status == 200) {
+          setPost((prev) => ({
+            ...prev,
+            comments: prev.comments.filter((c) => c.id !== parseInt(commentId)),
+          }));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <div>
@@ -277,7 +303,7 @@ const CommentPost = () => {
         ) : (
           post.comments.map((comment) => {
             return (
-              <div className="post-container" key={comment.id}>
+              <div className="post-container scroll-animate" key={comment.id}>
                 <div>
                   <Link
                     to={`/home/profile/${comment.author?.id}`}
@@ -366,7 +392,16 @@ const CommentPost = () => {
                     <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
                   </div>
                   <div>
-                    <img src={deleteIcon} alt="" />
+                    <img
+                      src={deleteIcon}
+                      alt=""
+                      onClick={() =>
+                        handleDelete({
+                          authorId: comment.authorId,
+                          commentId: comment.id,
+                        })
+                      }
+                    />
                     <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
                   </div>
                 </div>

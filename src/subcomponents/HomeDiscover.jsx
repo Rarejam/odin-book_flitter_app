@@ -14,7 +14,6 @@ const HomeDiscover = () => {
   const [posting, setPosting] = useState(false);
   const [LoggedUser, setLoggedUser] = useState("");
   const token = localStorage.getItem("token");
-
   // fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
@@ -68,6 +67,24 @@ const HomeDiscover = () => {
       console.error("Error creating post:", error.response?.data || error);
     } finally {
       setPosting(false);
+    }
+  };
+
+  //getting the post's author id and then comparing it with the current logged in user
+  //if IDs are equal make delete requeest else disable the dleet btn
+  const handleDelete = async ({ authorId, postId }) => {
+    if (authorId !== LoggedUser.id) {
+      alert("cannot delete other users posts");
+    } else if (authorId == LoggedUser.id) {
+      try {
+        await axios.delete(`http://localhost:3000/api/discover/${postId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setPosts((prev) => prev.filter((p) => p.id !== postId));
+        alert("Post deleted successfully");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -163,9 +180,12 @@ const HomeDiscover = () => {
           </p>
         ) : (
           posts.map((post) => (
-            <div key={post.id} className="post-container">
+            <div key={post.id} className="post-container scroll-animate ">
               <div>
-                <Link to="/home/profile" className="post-profile">
+                <Link
+                  to={`/home/profile/${post.authorId}`}
+                  className="post-profile"
+                >
                   <img
                     src={post.author?.profileImage || flitterIcon}
                     alt="profile"
@@ -188,7 +208,7 @@ const HomeDiscover = () => {
                     }}
                   >
                     <Link
-                      to="/home/profile"
+                      to={`/home/profile/${post.authorId}`}
                       className="post-username"
                       style={{ color: "grey" }}
                     >
@@ -282,7 +302,13 @@ const HomeDiscover = () => {
                   </div>
                 </div>
 
-                <div>
+                {/* passing the auhtor of the post's id as an parameter to ot the function to use later*/}
+
+                <div
+                  onClick={() =>
+                    handleDelete({ authorId: post.authorId, postId: post.id })
+                  }
+                >
                   <img src={deleteIcon} alt="delete" />
                 </div>
               </div>

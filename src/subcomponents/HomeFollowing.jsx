@@ -66,9 +66,12 @@ const Posts = () => {
   return (
     <div className="profile-post-div">
       {followingPosts.map((post) => (
-        <div key={post.id} className="post-container">
+        <div key={post.id} className="post-container scroll-animate">
           <div>
-            <Link to="/home/profile" className="post-profile">
+            <Link
+              to={`/home/profile/${post.authorId}`}
+              className="post-profile"
+            >
               <img
                 src={post.author?.profileImage || flitterIcon}
                 alt="profile"
@@ -91,7 +94,7 @@ const Posts = () => {
                 }}
               >
                 <Link
-                  to="/home/profile"
+                  to={`/home/profile/${post.authorId}`}
                   className="post-username"
                   style={{ color: "grey" }}
                 >
@@ -189,7 +192,11 @@ const Posts = () => {
             </div>
 
             <div>
-              <img src={deleteIcon} alt="delete" />
+              <img
+                src={deleteIcon}
+                alt="delete"
+                onClick={() => alert("Cannot delete posts of others")}
+              />
             </div>
           </div>
         </div>
