@@ -5,7 +5,7 @@ import profileIcon from "../assets/person.svg";
 import settingsIcon from "../assets/settings.svg";
 import logOutIcon from "../assets/logOut.svg";
 import findIcon from "../assets/find_user.svg";
-import nodeIcon from "../assets/node.svg";
+// import nodeIcon from "../assets/node.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ const LeftNav = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [username, setUsername] = useState("*****");
   const [userEmail, setUserEmail] = useState("**********");
-
+  const [userImage, setUserImage] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -23,12 +23,13 @@ const LeftNav = () => {
         navigate("/login");
       }
       try {
-        const res = await axios.get("http://localhost:3000/api/user", {
+        const { data } = await axios.get("http://localhost:3000/api/user", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setUsername(res.data.username);
-        setUserEmail(res.data.email);
+        setUsername(data.username);
+        setUserEmail(data.email);
+        setUserImage(data.profileImage);
       } catch (error) {
         console.log(error);
       }
@@ -71,8 +72,22 @@ const LeftNav = () => {
       </div>
 
       <div className="username">
-        <div className="username-image">
-          <img src={nodeIcon} alt="user avatar" />
+        <div
+          className="username-image"
+          style={{
+            boxShadow: "0px 0px 4px grey",
+          }}
+        >
+          <img
+            src={userImage || flitterIcon}
+            alt="user avatar"
+            style={{
+              borderRadius: "50%",
+              height: "100%",
+              width: "100%",
+              objectFit: "cover",
+            }}
+          />
         </div>
         <div>
           <div>{username}</div>

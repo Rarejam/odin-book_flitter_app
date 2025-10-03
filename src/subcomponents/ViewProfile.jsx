@@ -97,6 +97,12 @@ const ViewProfile = () => {
             Joined on{" "}
             {user.createdAt ? new Date(user.createdAt).toLocaleString() : ""}
           </div>
+          <div
+            style={{ color: "grey", fontStyle: "italic", textAlign: "center" }}
+          >
+            --{user.bio || "No bio"}
+          </div>
+
           <div style={{ display: "flex", gap: "10px", color: "grey" }}>
             <div>{user._count?.following} following</div>
             <div>{user._count?.followers} followers</div>

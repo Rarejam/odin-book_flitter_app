@@ -14,7 +14,7 @@ const CommentPost = () => {
   const [post, setPost] = useState(null);
   const [reply, setReply] = useState("");
   const [posting, setPosting] = useState(false);
-
+  const [userImage, setUserImage] = useState("");
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -34,8 +34,24 @@ const CommentPost = () => {
     fetchPostWithComments();
   }, [id]);
 
-  if (!post) return <div>Loading...</div>;
+  useEffect(() => {
+    const findUserImage = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/api/user", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUserImage(data.profileImage);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    findUserImage();
+  }, [token]);
 
+  // now handle loading after hooks
+  if (!post) {
+    return <div>Loading...</div>;
+  }
   async function handleReply(e) {
     e.preventDefault();
     console.log(reply);
@@ -81,7 +97,7 @@ const CommentPost = () => {
           }}
           className="settings-header-link"
         >
-          <img src={ArrowIcon} alt="" style={{}} />
+          <img src={ArrowIcon} alt="" />
         </Link>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div> Comment Section</div> <img src={createIcon} alt="" />
@@ -91,13 +107,18 @@ const CommentPost = () => {
       <div className="profile-post-div">
         <div className="post-container">
           <div>
-            <Link to="/home/profile" className="post-profile">
+            <Link
+              to={`/home/profile/${post.author?.id}`}
+              className="post-profile"
+            >
               <img
-                src={flitterIcon}
+                src={post.author?.profileImage || flitterIcon}
                 alt=""
                 style={{
-                  height: "40px",
-                  width: "40px",
+                  height: "100%",
+                  width: "100%",
+                  borderRadius: "50%",
+                  objectFit: "cover",
                 }}
               />
             </Link>
@@ -112,7 +133,7 @@ const CommentPost = () => {
                 }}
               >
                 <Link
-                  to="/home/profile"
+                  to={`/home/profile/${post.author?.id}`}
                   className="post-username"
                   style={{ color: "grey" }}
                 >
@@ -200,9 +221,14 @@ const CommentPost = () => {
               }}
             >
               <img
-                src={flitterIcon}
+                src={userImage || flitterIcon}
                 alt=""
-                style={{ height: "50px", width: "50px", borderRadius: "50%" }}
+                style={{
+                  height: "50px",
+                  width: "50px",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                }}
               />
             </div>
             <div className="post-form-div">
@@ -253,13 +279,18 @@ const CommentPost = () => {
             return (
               <div className="post-container" key={comment.id}>
                 <div>
-                  <Link to="/home/profile" className="post-profile">
+                  <Link
+                    to={`/home/profile/${comment.author?.id}`}
+                    className="post-profile"
+                  >
                     <img
-                      src={flitterIcon}
+                      src={comment.author?.profileImage || flitterIcon}
                       alt=""
                       style={{
-                        height: "40px",
-                        width: "40px",
+                        height: "100%",
+                        width: "100%",
+                        borderRadius: "50%",
+                        objectFit: "cover",
                       }}
                     />
                   </Link>
