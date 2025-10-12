@@ -4,6 +4,7 @@ import commentIcon from "../assets/Comments.svg";
 import likeIcon from "../assets/like.svg";
 import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
+import reshareFilledIcon from "../assets/shareFilled.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -11,6 +12,7 @@ const Posts = () => {
   const token = localStorage.getItem("token");
   const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reshared, setReshared] = useState(false);
 
   useEffect(() => {
     const getUserPosts = async () => {
@@ -62,6 +64,26 @@ const Posts = () => {
       </div>
     );
   }
+
+  const handleReshare = async (postId) => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/api/reshare/post/${postId}`,
+        {}, // empty body
+        { headers: { Authorization: `Bearer ${token}` } } // headers go here
+      );
+
+      if (data.reshared) {
+        alert("Post reshared!");
+        setReshared(true);
+      } else {
+        alert("Post unshared!");
+        setReshared(false);
+      }
+    } catch (err) {
+      console.error("Error resharing post:", err);
+    }
+  };
 
   return (
     <div className="profile-post-div">
@@ -140,22 +162,6 @@ const Posts = () => {
                 )}
               </div>
             </div>
-
-            <div className="post-follow-btn">
-              <button
-                style={{
-                  width: "175%",
-                  height: "2em",
-                  border: "none",
-                  borderRadius: "8px",
-                  backgroundColor: "#1da1f2",
-                  color: "white",
-                  marginTop: "20px",
-                }}
-              >
-                follow
-              </button>
-            </div>
           </div>
 
           <div className="post-bottom">
@@ -184,11 +190,12 @@ const Posts = () => {
               </div>
             </div>
 
-            <div>
-              <img src={reshareIcon} alt="reshare" />
-              <div style={{ marginLeft: "5px", fontSize: "18px" }}>
-                {post.shares?.length || 0}
-              </div>
+            <div onClick={() => handleReshare(post.id)}>
+              <img
+                src={reshared ? reshareFilledIcon : reshareIcon}
+                alt="reshare"
+              />{" "}
+              {post._count?.reshares}
             </div>
 
             <div>

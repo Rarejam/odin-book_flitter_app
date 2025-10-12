@@ -3,6 +3,7 @@ import FindUsers from "./compoents/FindUsers";
 import HomeComponent from "./compoents/HomeComponent";
 import Profile from "./compoents/Profile";
 import Settings from "./compoents/Settings";
+// import Reshare from "./otherRoutes/reshare";
 import ProfileComments from "./profile/ProfileComments";
 import ProfileFollowing from "./profile/ProfileFollowing";
 import ProfilePosts from "./profile/ProfilePosts";
@@ -14,11 +15,12 @@ import AllUsers from "./subcomponents/AllUsers";
 import Comments from "./subcomponents/Comments";
 import FindFollowers from "./subcomponents/FindFollowers";
 import FindFollowing from "./subcomponents/FindFollowing";
-import Following from "./subcomponents/Following";
+import Reshare from "./subcomponents/Reshare";
 import HomeDiscover from "./subcomponents/HomeDiscover";
 import HomeFollowing from "./subcomponents/HomeFollowing";
 import Posts from "./subcomponents/Posts";
 import ViewProfile from "./subcomponents/ViewProfile";
+import TextRoute from "./otherRoutes/textRoute";
 
 const routes = [
   {
@@ -43,6 +45,7 @@ const routes = [
           },
         ],
       },
+      { path: "/home/text/:id", element: <TextRoute /> },
       {
         path: "/home/users",
         element: <FindUsers />,
@@ -71,8 +74,8 @@ const routes = [
             element: <Comments />,
           },
           {
-            path: "following",
-            element: <Following />,
+            path: "reshares",
+            element: <Reshare />,
           },
         ],
       },

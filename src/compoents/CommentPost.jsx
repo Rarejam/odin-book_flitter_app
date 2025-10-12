@@ -112,6 +112,22 @@ const CommentPost = () => {
       }
     }
   };
+  const handleLike = async (commentId) => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/api/like/comment/${commentId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (data.liked == true) {
+        alert("comment liked");
+      } else if (data.liked == false) {
+        alert("comment unliked");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -207,15 +223,15 @@ const CommentPost = () => {
           <div className="post-bottom">
             <div>
               <img src={commentIcon} alt="" />
-              <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+              <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
             </div>
             <div>
               <img src={likeIcon} alt="" />
-              <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+              <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
             </div>
             <div>
               <img src={reshareIcon} alt="" />
-              <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+              <div style={{ marginLeft: "5px", fontSize: "18px" }}></div>
             </div>
             <div>
               <img src={deleteIcon} alt="" />
@@ -331,7 +347,7 @@ const CommentPost = () => {
                       }}
                     >
                       <Link
-                        to="/home/profile"
+                        to={`/home/profile/${comment.author?.id}`}
                         className="post-username"
                         style={{ color: "grey" }}
                       >
@@ -384,12 +400,18 @@ const CommentPost = () => {
 
                 <div className="post-bottom">
                   <div>
-                    <img src={likeIcon} alt="" />
-                    <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+                    <img
+                      src={likeIcon}
+                      alt=""
+                      onClick={() => handleLike(comment.id)}
+                    />
+                    <div style={{ marginLeft: "5px", fontSize: "18px" }}>
+                      {comment._count?.likes || 0}
+                    </div>
                   </div>
                   <div>
                     <img src={reshareIcon} alt="" />
-                    <div style={{ marginLeft: "5px", fontSize: "18px" }}>1</div>
+                    <div style={{ marginLeft: "5px", fontSize: "18px" }}>0</div>
                   </div>
                   <div>
                     <img

@@ -1,29 +1,16 @@
-import searchIcon from "../assets/search.svg";
 import mdnIcon from "../assets/mdn.svg";
 import reactIcon from "../assets/react.svg";
 import nodeIcon from "../assets/node.svg";
+import { useState } from "react";
 
 const RightNav = () => {
+  const [following1, setFollowing1] = useState(false);
+  const [following2, setFollowing2] = useState(false);
+  const [following3, setFollowing3] = useState(false);
+
   return (
     <div className="right-nav">
       {/* //input-slide */}
-      <form className="input-slide-div">
-        <div
-          className="username-image"
-          style={{
-            border: "none",
-            height: "30px",
-            width: "30px",
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            marginRight: "5px",
-          }}
-        >
-          <img src={searchIcon} alt="" />
-        </div>
-        <input type="text" className="input-slide" placeholder="search..." />
-      </form>
 
       {/* //first-slide */}
       <div className="first-slide">
@@ -111,7 +98,7 @@ const RightNav = () => {
           >
             <div
               style={{
-                fontStyle: "bold",
+                fontWeight: "bold",
                 fontSize: "18px",
               }}
             >
@@ -128,8 +115,9 @@ const RightNav = () => {
               borderRadius: "8px",
             }}
             className="cta-button"
+            onClick={() => setFollowing1(!following1)}
           >
-            follow
+            {following1 ? "following" : "follow"}
           </button>
         </div>
 
@@ -159,7 +147,7 @@ const RightNav = () => {
           >
             <div
               style={{
-                fontStyle: "bold",
+                fontWeight: "bold",
                 fontSize: "18px",
               }}
             >
@@ -175,8 +163,9 @@ const RightNav = () => {
               border: "none",
               borderRadius: "8px",
             }}
+            onClick={() => setFollowing2(!following2)}
           >
-            follow
+            {following2 ? "following" : "follow"}
           </button>
         </div>
 
@@ -206,7 +195,7 @@ const RightNav = () => {
           >
             <div
               style={{
-                fontStyle: "bold",
+                fontWeight: "bold",
                 fontSize: "18px",
               }}
             >
@@ -222,8 +211,9 @@ const RightNav = () => {
               border: "none",
               borderRadius: "8px",
             }}
+            onClick={() => setFollowing3(!following3)}
           >
-            follow
+            {following3 ? "following" : "follow"}
           </button>
         </div>
       </div>

@@ -3,6 +3,8 @@ import commentIcon from "../assets/comments.svg";
 import likeIcon from "../assets/like.svg";
 import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
+import LikeFilledIcon from "../assets/likeFilled.svg";
+import reshareFilledIcon from "../assets/shareFilled.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -12,28 +14,14 @@ const HomeDiscover = () => {
   const [postText, setPostText] = useState("");
   const [loadingPosts, setLoadingPosts] = useState(false);
   const [posting, setPosting] = useState(false);
-  const [LoggedUser, setLoggedUser] = useState("");
+  const [LoggedUser, setLoggedUser] = useState(null);
+  const [postImage, setPostImage] = useState("");
+
   const token = localStorage.getItem("token");
-  // fetch posts
+
+  // ✅ Step 1: get logged-in user info first
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setLoadingPosts(true);
-        const { data } = await axios.get("http://localhost:3000/api/discover", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setPosts(data);
-      } catch (error) {
-        console.error("Error fetching posts:", error.response?.data || error);
-      } finally {
-        setLoadingPosts(false);
-      }
-    };
-    fetchPosts();
-  }, [token]);
-  //get profileImage 0f the current logged-In user
-  useEffect(() => {
-    const getUserPrfoileImage = async () => {
+    const getUserProfile = async () => {
       try {
         const { data } = await axios.get("http://localhost:3000/api/user", {
           headers: { Authorization: `Bearer ${token}` },
@@ -43,8 +31,41 @@ const HomeDiscover = () => {
         console.log(error);
       }
     };
-    getUserPrfoileImage();
+    getUserProfile();
   }, [token]);
+
+  // ✅ Step 2: fetch posts only when user is loaded
+  useEffect(() => {
+    if (!LoggedUser) return;
+
+    const fetchPosts = async () => {
+      try {
+        setLoadingPosts(true);
+        const { data } = await axios.get("http://localhost:3000/api/discover", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Use author's followers list to check if current user follows them
+        const updatedPosts = data.map((post) => ({
+          ...post,
+          followed:
+            post.author.id === LoggedUser.id
+              ? false // ✅ don't allow self-follow
+              : post.author.followers?.some(
+                  (f) => f.followerId === LoggedUser.id
+                ),
+        }));
+
+        setPosts(updatedPosts);
+      } catch (error) {
+        console.error("Error fetching posts:", error.response?.data || error);
+      } finally {
+        setLoadingPosts(false);
+      }
+    };
+    fetchPosts();
+  }, [token, LoggedUser]);
+
   // create post
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,39 +73,125 @@ const HomeDiscover = () => {
 
     setPosting(true);
     try {
-      console.log("Posting content:", postText);
+      const formData = new FormData();
+      formData.append("content", postText);
+      if (postImage) formData.append("post_image", postImage);
 
       const { data } = await axios.post(
         "http://localhost:3000/api/discover",
-        { content: postText },
+        formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // add new post to the top of the list
       setPosts([data, ...posts]);
       setPostText("");
+      setPostImage(null);
     } catch (error) {
-      console.error("Error creating post:", error.response?.data || error);
+      console.log(error);
     } finally {
       setPosting(false);
     }
   };
 
-  //getting the post's author id and then comparing it with the current logged in user
-  //if IDs are equal make delete requeest else disable the dleet btn
+  // delete post
   const handleDelete = async ({ authorId, postId }) => {
     if (authorId !== LoggedUser.id) {
-      alert("cannot delete other users posts");
-    } else if (authorId == LoggedUser.id) {
-      try {
-        await axios.delete(`http://localhost:3000/api/discover/${postId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setPosts((prev) => prev.filter((p) => p.id !== postId));
-        alert("Post deleted successfully");
-      } catch (error) {
-        console.log(error);
+      alert("Cannot delete other users' posts");
+      return;
+    }
+
+    try {
+      await axios.delete(`http://localhost:3000/api/discover/${postId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setPosts((prev) => prev.filter((p) => p.id !== postId));
+      alert("Post deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // toggle like
+  const handleLike = async (postId) => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/api/like/post/${postId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setPosts((posts) =>
+        posts.map((p) =>
+          p.id === postId
+            ? {
+                ...p,
+                liked: data.liked,
+                _count: {
+                  ...p._count,
+                  likes: data.liked ? p._count.likes + 1 : p._count.likes - 1,
+                },
+              }
+            : p
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // toggle reshare
+  const handleReshare = async (postId) => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/api/reshare/post/${postId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setPosts((posts) =>
+        posts.map((p) =>
+          p.id === postId
+            ? {
+                ...p,
+                reshared: data.reshared,
+                _count: {
+                  ...p._count,
+                  reshares: data.reshared
+                    ? p._count.reshares + 1
+                    : p._count.reshares - 1,
+                },
+              }
+            : p
+        )
+      );
+    } catch (err) {
+      console.error("Error resharing post:", err);
+    }
+  };
+
+  // toggle follow/unfollow
+  const handleFollow = async ({ followingId }) => {
+    try {
+      if (followingId == LoggedUser.id) {
+        alert("Cannot follow yourself mehh");
+        return;
       }
+
+      const { data } = await axios.post(
+        `http://localhost:3000/api/follow/${followingId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.author?.id === followingId ? { ...p, followed: data.followed } : p
+        )
+      );
+
+      // alert(data.message);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -105,14 +212,14 @@ const HomeDiscover = () => {
             }}
           >
             <img
-              src={LoggedUser.profileImage || flitterIcon}
+              src={LoggedUser?.profileImage || flitterIcon}
               alt="profile"
               style={{ height: "50px", width: "50px", borderRadius: "50%" }}
             />
           </div>
 
           <div className="post-form-div">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
               <textarea
                 name="post_text"
                 id="textarea_post"
@@ -121,7 +228,6 @@ const HomeDiscover = () => {
                 onChange={(e) => setPostText(e.target.value)}
               ></textarea>
 
-              {/* Upload inside SAME form */}
               <label htmlFor="post_image" className="upload-label">
                 Upload File or Image
               </label>
@@ -130,6 +236,7 @@ const HomeDiscover = () => {
                 id="post_image"
                 name="post_image"
                 className="upload-input"
+                onChange={(e) => setPostImage(e.target.files[0])}
               />
 
               <button
@@ -180,7 +287,7 @@ const HomeDiscover = () => {
           </p>
         ) : (
           posts.map((post) => (
-            <div key={post.id} className="post-container scroll-animate ">
+            <div key={post.id} className="post-container ">
               <div>
                 <Link
                   to={`/home/profile/${post.authorId}`}
@@ -251,7 +358,7 @@ const HomeDiscover = () => {
                 <div className="post-follow-btn">
                   <button
                     style={{
-                      width: "175%",
+                      width: "150%",
                       height: "2em",
                       border: "none",
                       borderRadius: "8px",
@@ -259,8 +366,11 @@ const HomeDiscover = () => {
                       color: "white",
                       marginTop: "20px",
                     }}
+                    onClick={() =>
+                      handleFollow({ followingId: post.author?.id })
+                    }
                   >
-                    follow
+                    {post.followed ? "unfollow" : "follow"}
                   </button>
                 </div>
               </div>
@@ -289,20 +399,25 @@ const HomeDiscover = () => {
                 </div>
 
                 <div>
-                  <img src={likeIcon} alt="like" />
+                  <img
+                    src={post.liked ? LikeFilledIcon : likeIcon}
+                    alt="like"
+                    onClick={() => handleLike(post.id)}
+                    style={{ cursor: "pointer" }}
+                  />
                   <div style={{ marginLeft: "5px", fontSize: "18px" }}>
-                    {post.likes?.length || 0}
+                    {post._count?.likes}
                   </div>
                 </div>
 
-                <div>
-                  <img src={reshareIcon} alt="reshare" />
-                  <div style={{ marginLeft: "5px", fontSize: "18px" }}>
-                    {post.shares?.length || 0}
-                  </div>
+                <div onClick={() => handleReshare(post.id)}>
+                  <img
+                    src={post.reshared ? reshareFilledIcon : reshareIcon}
+                    alt="reshare"
+                    style={{ cursor: "pointer" }}
+                  />{" "}
+                  {post._count?.reshares}
                 </div>
-
-                {/* passing the auhtor of the post's id as an parameter to ot the function to use later*/}
 
                 <div
                   onClick={() =>

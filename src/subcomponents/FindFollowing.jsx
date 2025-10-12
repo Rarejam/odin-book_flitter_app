@@ -72,18 +72,20 @@ const AllUsers = () => {
         <div className="user scroll-animate" key={user.id}>
           <div className="profile">
             <div className="profile-pic-div">
-              <div className="profile-picture">
-                <img
-                  src={user.profileImage || flitterIcon} // ✅ real image with fallback
-                  alt={user.username}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
+              <Link to={`/home/profile/${user.id}`}>
+                <div className="profile-picture">
+                  <img
+                    src={user.profileImage || flitterIcon} // ✅ real image with fallback
+                    alt={user.username}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              </Link>
             </div>
 
             {/* username */}
@@ -165,6 +167,19 @@ const AllUsers = () => {
                 </button>
               </Link>
             </div>
+
+            <Link
+              to={`/home/text/${user.id}`}
+              className="text-btn"
+              style={{ backgroundColor: "red" }}
+            >
+              <button
+                className="text-btn"
+                style={{ height: "100%", width: "100%" }}
+              >
+                Text
+              </button>
+            </Link>
           </div>
         </div>
       ))}

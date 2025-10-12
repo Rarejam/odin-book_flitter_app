@@ -22,23 +22,24 @@ const Login = () => {
     try {
       setIsLoading(true);
       const res = await axios.post("http://localhost:3000/api/login", formData);
-      setMessage(res.data.message || "login successful!");
-      localStorage.setItem("token", res.data.token);
-      setError("");
-      navigate("/home");
+      if (res.status == 200) {
+        setMessage(res.data.message || "login successful!");
+        localStorage.setItem("token", res.data.token);
+        setError("");
+        navigate("/home");
+      }
     } catch (err) {
       setError(err.response?.data?.message);
       setMessage("");
     } finally {
       setIsLoading(false);
-      setMessage("Login Successfully");
     }
   };
 
   const handleGuest = async () => {
     try {
       const res = await axios.post("http://localhost:3000/api/guest");
-      console.log("Guest Login:", res.data);
+      // console.log("Guest Login:", res.data);
       localStorage.setItem("token", res.data.token);
       navigate("/home");
     } catch (error) {

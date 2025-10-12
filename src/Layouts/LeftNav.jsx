@@ -84,14 +84,16 @@ const LeftNav = () => {
             style={{
               borderRadius: "50%",
               height: "100%",
-              width: "100%",
+              minWidth: "100%",
               objectFit: "cover",
             }}
           />
         </div>
         <div>
           <div>{username}</div>
-          <div style={{ fontSize: "14px" }}>{userEmail}</div>
+          <div style={{ fontSize: "14px", textOverflow: "ellipsis" }}>
+            {userEmail}
+          </div>
         </div>
       </div>
 

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import flitterIcon from "../assets/flitterIcon.svg";
 import likeIcon from "../assets/like.svg";
-import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -123,22 +122,6 @@ const Comments = () => {
 
               <div className="post-text">{comment.content}</div>
             </div>
-
-            <div className="post-follow-btn">
-              <button
-                style={{
-                  width: "175%",
-                  height: "2em",
-                  border: "none",
-                  borderRadius: "8px",
-                  backgroundColor: "#1da1f2",
-                  color: "white",
-                  marginTop: "20px",
-                }}
-              >
-                follow
-              </button>
-            </div>
           </div>
 
           <div className="post-bottom">
@@ -146,13 +129,6 @@ const Comments = () => {
               <img src={likeIcon} alt="like" />
               <div style={{ marginLeft: "5px", fontSize: "18px" }}>
                 {comment.likes?.length || 0}
-              </div>
-            </div>
-
-            <div>
-              <img src={reshareIcon} alt="reshare" />
-              <div style={{ marginLeft: "5px", fontSize: "18px" }}>
-                {comment.shares?.length || 0}
               </div>
             </div>
 

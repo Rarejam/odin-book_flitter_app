@@ -19,7 +19,7 @@ const AllUsers = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setUsers(data || []); // fallback to [] if no data
+        setUsers(data || []);
       } catch (error) {
         console.log("Error fetching users:", error);
         setUsers([]);
@@ -29,6 +29,31 @@ const AllUsers = () => {
     };
     getUsers();
   }, [token]);
+
+  const handleFollow = async (userId) => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/api/follow/${userId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // prevent user from following themselves
+      if (userId === parseInt(localStorage.getItem("userId"))) {
+        alert("You can’t follow yourself!");
+        return;
+      }
+
+      // toggle follow/unfollow in UI
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.id === userId ? { ...u, followed: data.followed } : u
+        )
+      );
+    } catch (err) {
+      console.error("Error following/unfollowing:", err);
+    }
+  };
 
   if (loading) {
     return (
@@ -46,7 +71,7 @@ const AllUsers = () => {
     );
   }
 
-  if (users.length == 0) {
+  if (users.length === 0) {
     return (
       <div
         style={{
@@ -65,22 +90,24 @@ const AllUsers = () => {
   return (
     <div className="users-div">
       {users.map((user) => (
-        <div className="user scroll-animate " key={user.id}>
+        <div className="user scroll-animate" key={user.id}>
           <div className="profile">
             {/* profile pic */}
             <div className="profile-pic-div">
-              <div className="profile-picture">
-                <img
-                  src={user.profileImage || flitterIcon}
-                  alt={user.username}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
+              <Link to={`/home/profile/${user.id}`}>
+                <div className="profile-picture">
+                  <img
+                    src={user.profileImage || flitterIcon}
+                    alt={user.username}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              </Link>
             </div>
 
             {/* username */}
@@ -125,17 +152,19 @@ const AllUsers = () => {
             {/* buttons */}
             <div style={{ display: "flex", gap: "20px", marginTop: "15px" }}>
               <button
+                onClick={() => handleFollow(user.id)}
                 style={{
                   width: "8vw",
                   height: "2em",
                   border: "none",
                   borderRadius: "8px",
-                  backgroundColor: "#1da1f2",
+                  backgroundColor: user.followed ? "grey" : "#1da1f2",
                   color: "white",
                 }}
               >
-                follow
+                {user.followed ? "Unfollow" : "Follow"}
               </button>
+
               <Link to={`/home/profile/${user.id}`}>
                 <button
                   style={{
@@ -147,10 +176,23 @@ const AllUsers = () => {
                     color: "white",
                   }}
                 >
-                  view
+                  View
                 </button>
               </Link>
             </div>
+
+            <Link
+              to={`/home/text/${user.id}`}
+              className="text-btn"
+              style={{ backgroundColor: "red" }}
+            >
+              <button
+                className="text-btn"
+                style={{ height: "100%", width: "100%" }}
+              >
+                Text
+              </button>
+            </Link>
           </div>
         </div>
       ))}

@@ -109,8 +109,8 @@ const Profile = () => {
             <Link to="/home/profile/comments" className="profile-link">
               Comments
             </Link>
-            <Link to="/home/profile/following" className="profile-link">
-              Following
+            <Link to="/home/profile/reshares" className="profile-link">
+              Reshares
             </Link>
           </div>
         </div>

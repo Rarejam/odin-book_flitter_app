@@ -14,6 +14,7 @@ const Settings = () => {
   const [err, setErr] = useState("");
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [imageFile, setImageFile] = useState("");
 
   const token = localStorage.getItem("token");
   const naviagte = useNavigate();
@@ -83,6 +84,34 @@ const Settings = () => {
       setDeleting(false);
     }
   };
+
+  //uploading image for profile pic
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    try {
+      //get the fomr data obj
+      const formData = new FormData();
+
+      // append the image-file to the fomrData with a particular name field
+      formData.append("profile_image", imageFile);
+      const res = await axios.post(
+        "http://localhost:3000/api/user/picture",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // "Content-Type": "multipart/form-data", //set type beung sent...
+          },
+        }
+      );
+      if (res.status == 200) {
+        setSuccessful("Profile Image Successfully uploaded");
+      }
+    } catch (error) {
+      console.log(error);
+      setErr("Could'nt upload Image (select Image before uplaod)");
+    }
+  };
   return (
     <div>
       <div className="settings-header">
@@ -99,17 +128,27 @@ const Settings = () => {
       </div>
 
       <div className="settings-content">
-        <form className="settings-first-form">
+        <form
+          className="settings-first-form"
+          encType="multipart/form-data"
+          onSubmit={handleUpload}
+        >
           <div>
             <label htmlFor="profile_picture" className="upload-label">
-              Upload Profile Picture
+              Select Profile Picture
             </label>
             <input
               type="file"
               id="profile_picture"
-              name="profile_picture"
+              name="profile_image"
               className="upload-input"
+              //get the file obj not the string from the input file
+              // thats why its e.target.files[0]
+              onChange={(e) => setImageFile(e.target.files[0])}
             />
+            <button type="submit" className="upload-button">
+              Upload
+            </button>
           </div>
         </form>
         <div

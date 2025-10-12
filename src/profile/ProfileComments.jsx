@@ -126,21 +126,7 @@ const ProfileComments = () => {
               <div className="post-text">{comment.content}</div>
             </div>
 
-            <div className="post-follow-btn">
-              <button
-                style={{
-                  width: "175%",
-                  height: "2em",
-                  border: "none",
-                  borderRadius: "8px",
-                  backgroundColor: "#1da1f2",
-                  color: "white",
-                  marginTop: "20px",
-                }}
-              >
-                follow
-              </button>
-            </div>
+            {/* <div className="post-follow-btn"></div> */}
           </div>
 
           <div className="post-bottom">
