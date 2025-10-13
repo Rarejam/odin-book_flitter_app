@@ -4,6 +4,8 @@ import flitterIcon from "../assets/flitterIcon.svg";
 import dateIcon from "../assets/calender.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Profile = () => {
   const token = localStorage.getItem("token");
@@ -21,16 +23,72 @@ const Profile = () => {
   }, [token]);
   if (!user) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          fontSize: "24px",
-        }}
-      >
-        Loading
+      <div className="users-div" style={{ height: "100vh" }}>
+        <SkeletonTheme baseColor="#e0e0e0" highlightColor="#f5f5f5">
+          {[1].map((i) => (
+            <div
+              key={i}
+              className="user"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "12px",
+                padding: "20px",
+                borderRadius: "10px",
+                boxShadow: "0px 0px 4px whitesmoke",
+                backgroundColor: "rgba(0, 0, 0, 0.05)",
+                marginBottom: "20px",
+                width: "80%",
+                maxWidth: "300px",
+                marginInline: "auto",
+              }}
+            >
+              {/* profile pic */}
+              <Skeleton
+                circle
+                height={200}
+                width={200}
+                style={{ marginBottom: "10px" }}
+              />
+
+              {/* username */}
+              <Skeleton height={20} width="60%" />
+
+              {/* handle */}
+              <Skeleton height={15} width="40%" />
+
+              {/* joined date */}
+              <Skeleton height={15} width="50%" />
+
+              {/* follower counts */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "15px",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <Skeleton height={15} width={60} />
+                <Skeleton height={15} width={60} />
+              </div>
+
+              {/* buttons */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <Skeleton height={35} width={90} borderRadius={8} />
+                <Skeleton height={35} width={90} borderRadius={8} />
+              </div>
+            </div>
+          ))}
+        </SkeletonTheme>
       </div>
     );
   }

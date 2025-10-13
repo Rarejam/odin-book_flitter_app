@@ -6,6 +6,7 @@ import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
 import LikeFilledIcon from "../assets/likeFilled.svg";
 import reshareFilledIcon from "../assets/shareFilled.svg";
+import spinnerGif from "../assets/spinner.gif";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -91,7 +92,7 @@ const Posts = () => {
           fontSize: "24px",
         }}
       >
-        Loading posts...
+        <img style={{ borderRadius: "50%" }} src={spinnerGif} alt="" />
       </div>
     );
   }

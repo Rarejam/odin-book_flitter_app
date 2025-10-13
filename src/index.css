@@ -1401,3 +1401,286 @@ body.dark-mode .chat-input-area button:hover {
     padding: 8px 16px;
   }
 }
+/* 📱 Mobile Responsiveness Fix */
+@media screen and (max-width: 768px) {
+  /* General */
+  body {
+    font-size: 14px;
+  }
+
+  .app-container {
+    flex-direction: column;
+  }
+
+  /* Left navigation collapses to top bar */
+  .left-nav {
+    width: 100%;
+    min-height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .nav-link-div {
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .nav-link {
+    width: auto;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  /* Center content takes full width */
+  .center-nav {
+    width: 100%;
+    padding: 10px;
+  }
+
+  /* Right nav becomes hidden or collapsible */
+  .right-nav {
+    display: none;
+  }
+
+  /* Forms and inputs */
+  .login-form {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .input-slide-div > input {
+    width: 80%;
+    font-size: 16px;
+  }
+
+  .post-form-div > form > textarea {
+    font-size: 16px;
+  }
+
+  .profile-picture {
+    height: 100px;
+    width: 100px;
+  }
+
+  .profile-picture > img {
+    height: 80px;
+    width: 80px;
+  }
+
+  .profile-link {
+    font-size: 14px;
+  }
+
+  .index-header {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .index-content .hero h2 {
+    font-size: 1.5rem;
+  }
+
+  .index-content .hero p {
+    font-size: 1rem;
+  }
+
+  .index-content .features {
+    grid-template-columns: 1fr;
+  }
+
+  .index-footer {
+    font-size: 0.8rem;
+  }
+}
+
+/* 📱 Even smaller phones */
+@media screen and (max-width: 480px) {
+  .nav-link {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .login-form {
+    padding: 15px;
+  }
+
+  .profile-picture {
+    height: 80px;
+    width: 80px;
+  }
+
+  .post-form-div > form > textarea {
+    font-size: 14px;
+  }
+}
+/* 📱 Mobile responsiveness for Home layout */
+@media screen and (max-width: 768px) {
+  /* ✅ Main layout: stack everything vertically */
+  .app-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  /* ✅ Left nav becomes top bar */
+  .left-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    border-right: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-link-div {
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    padding: 5px 10px;
+    width: auto;
+  }
+
+  /* ✅ Center content takes full width */
+  .center-nav {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    box-shadow: none;
+  }
+
+  .feed,
+  .users-div,
+  .find-users-container {
+    width: 100%;
+    padding: 10px;
+    box-shadow: none;
+  }
+
+  .post {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .post-content {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .post-image {
+    width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+  }
+
+  /* ✅ Right nav hidden or collapsible */
+  .right-nav {
+    display: none;
+  }
+
+  /* ✅ Profile & user cards */
+  .user,
+  .profile {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .profile-picture {
+    height: 80px;
+    width: 80px;
+    margin: 0 auto 10px auto;
+  }
+
+  .profile-picture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .profile-link {
+    font-size: 14px;
+  }
+
+  /* ✅ Buttons */
+  button {
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+
+  .text-btn {
+    width: 100%;
+  }
+
+  /* ✅ Search & header */
+  .settings-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .input-slide-div {
+    width: 90%;
+  }
+
+  .input-slide-div input {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  /* ✅ Adjust grid or multi-column layouts */
+  .profile-nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+/* 📱 Even smaller phones */
+@media screen and (max-width: 480px) {
+  .nav-link {
+    font-size: 12px;
+  }
+
+  .profile-picture {
+    width: 70px;
+    height: 70px;
+  }
+
+  .post-content {
+    font-size: 13px;
+  }
+
+  .post-image {
+    max-height: 200px;
+  }
+
+  button {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}

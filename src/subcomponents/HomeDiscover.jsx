@@ -5,6 +5,7 @@ import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
 import LikeFilledIcon from "../assets/likeFilled.svg";
 import reshareFilledIcon from "../assets/shareFilled.svg";
+import spinner from "../assets/spinner.gif";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -194,7 +195,22 @@ const HomeDiscover = () => {
       console.log(error);
     }
   };
-
+  if (loadingPosts) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "40vh",
+          fontSize: "24px",
+        }}
+      >
+        <img style={{ borderRadius: "50%" }} src={spinner} alt="" />
+      </div>
+    );
+  }
   return (
     <div className="home-container">
       {/* Create Post */}
@@ -271,7 +287,7 @@ const HomeDiscover = () => {
               fontSize: "24px",
             }}
           >
-            Loading posts...
+            No posts Found...
           </p>
         ) : posts.length === 0 ? (
           <p
@@ -283,7 +299,7 @@ const HomeDiscover = () => {
               fontSize: "24px",
             }}
           >
-            No posts yet
+            <img style={{ borderRadius: "50%" }} src={spinner} alt="" />
           </p>
         ) : (
           posts.map((post) => (

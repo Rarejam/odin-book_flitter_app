@@ -4,6 +4,7 @@ import commentIcon from "../assets/Comments.svg";
 import likeIcon from "../assets/like.svg";
 import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
+import inLoveGif from "../assets/inLove.gif";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -43,7 +44,7 @@ const ProfileFollowing = () => {
           fontSize: "24px",
         }}
       >
-        Loading posts...
+        <img style={{ borderRadius: "50%" }} src={inLoveGif} alt="" />
       </div>
     );
   }

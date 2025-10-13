@@ -3,6 +3,7 @@ import flitterIcon from "../assets/flitterIcon.svg";
 import likeIcon from "../assets/like.svg";
 import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
+import GhostGif from "../assets/Ghost.gif";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -42,7 +43,7 @@ const ProfileComments = () => {
           fontSize: "24px",
         }}
       >
-        Loading Comments...
+        <img style={{ borderRadius: "50%" }} src={GhostGif} alt="" />
       </div>
     );
   }

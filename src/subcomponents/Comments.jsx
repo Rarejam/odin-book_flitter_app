@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import flitterIcon from "../assets/flitterIcon.svg";
 import likeIcon from "../assets/like.svg";
 import deleteIcon from "../assets/delete.svg";
+import BookGif from "../assets/Book.gif";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -39,7 +40,7 @@ const Comments = () => {
           fontSize: "24px",
         }}
       >
-        Loading Comments...
+        <img style={{ borderRadius: "50%" }} src={BookGif} alt="" />
       </div>
     );
   }

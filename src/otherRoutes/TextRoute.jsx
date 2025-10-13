@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import flitterIcon from "../assets/flitterIcon.svg";
 import deleteIcon from "../assets/delete.svg";
 import UploadIcon from "../assets/upload.svg";
+import Ghost from "../assets/Ghost.gif";
 import axios from "axios";
 
 const TextRoute = () => {
@@ -108,7 +109,7 @@ const TextRoute = () => {
         }}
         className="loading-screen"
       >
-        Loading...
+        <img style={{ borderRadius: "50%" }} src={Ghost} alt="" />
       </div>
     );
   }

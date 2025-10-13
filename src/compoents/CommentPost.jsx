@@ -6,6 +6,7 @@ import commentIcon from "../assets/Comments.svg";
 import likeIcon from "../assets/like.svg";
 import reshareIcon from "../assets/refleet.svg";
 import deleteIcon from "../assets/delete.svg";
+import GhostGif from "../assets/Ghost.gif";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -52,7 +53,20 @@ const CommentPost = () => {
 
   // now handle loading after hooks
   if (!post) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "40vh",
+          fontSize: "24px",
+        }}
+      >
+        <img style={{ borderRadius: "50%" }} src={GhostGif} alt="" />
+      </div>
+    );
   }
   async function handleReply(e) {
     e.preventDefault();
