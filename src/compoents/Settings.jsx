@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ArrowIcon from "../assets/arrow.svg";
 import eyeIcon from "../assets/eye.png";
 import { useState } from "react";
+import BookGif from "../assets/Book.gif";
 import axios from "axios";
 
 const Settings = () => {
@@ -15,12 +16,15 @@ const Settings = () => {
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [imageFile, setImageFile] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setSaving(true);
     // Only include fields with values
     const formData = {};
     if (username) formData.username = username;
@@ -64,24 +68,27 @@ const Settings = () => {
       setSuccessful("");
     } finally {
       setSaving(false);
+      setLoading(false);
     }
   };
   //to delete user
   const handleDeleteUser = async (e) => {
     e.preventDefault();
     setDeleting(true);
+    setLoading(true);
     try {
       const res = await axios.delete("http://localhost:3000/api/delete-user", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.status === 200) {
-        naviagte("/");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
-      setErr("Could'nt delete");
+      setErr("Couldn't delete user");
     } finally {
       setDeleting(false);
+      setLoading(false);
     }
   };
 
@@ -89,6 +96,7 @@ const Settings = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       //get the fomr data obj
       const formData = new FormData();
 
@@ -110,8 +118,11 @@ const Settings = () => {
     } catch (error) {
       console.log(error);
       setErr("Could'nt upload Image (select Image before uplaod)");
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div>
       <div className="settings-header">
@@ -154,13 +165,31 @@ const Settings = () => {
         <div
           style={{
             display: "flex",
-            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
             fontSize: "20px",
             marginBottom: "10px",
+            // backgroundColor: "red",
           }}
         >
           <span style={{ color: "red", marginRight: "10px" }}>{err}</span>
           <span style={{ color: "green" }}>{successful}</span>
+          {loading ? (
+            <div
+              style={{
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "8vh",
+                fontSize: "24px",
+              }}
+            >
+              <img style={{ borderRadius: "50%" }} src={BookGif} alt="" />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <form className="settings-second-form" onSubmit={handleSubmit}>

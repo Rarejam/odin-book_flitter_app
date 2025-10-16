@@ -65,7 +65,7 @@ const Comments = () => {
   return (
     <div className="profile-post-div">
       {userComments.map((comment) => (
-        <div key={comment.id} className="post-container scroll-animate">
+        <div key={comment.id} className="post-container ">
           <div>
             <Link
               to={`/home/profile/${comment.author?.id}`}
@@ -116,7 +116,12 @@ const Comments = () => {
                 >
                   •
                 </div>
-                <div style={{ color: "grey" }}>
+                <div
+                  style={{
+                    color: "grey",
+                    fontSize: "14px",
+                  }}
+                >
                   {new Date(comment.createdAt).toLocaleString()}
                 </div>
               </div>

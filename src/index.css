@@ -229,6 +229,10 @@ body * {
   margin-bottom: 20px;
   color: #aaa;
 }
+.feature:hover {
+  scale: 1.1;
+  transition: 0.3s;
+}
 
 .index-content .cta-button {
   display: inline-block;

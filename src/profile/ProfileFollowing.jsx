@@ -69,7 +69,7 @@ const ProfileFollowing = () => {
   return (
     <div className="profile-post-div">
       {followingPosts.map((post) => (
-        <div key={post.id} className="post-container scroll-animate">
+        <div key={post.id} className="post-container ">
           <div>
             <Link
               to={`/home/profile/${post.author?.id}`}

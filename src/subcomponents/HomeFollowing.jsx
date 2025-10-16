@@ -189,7 +189,7 @@ const Posts = () => {
                 >
                   •
                 </div>
-                <div style={{ color: "grey" }}>
+                <div style={{ color: "grey", fontSize: "14px" }}>
                   {new Date(post.createdAt).toLocaleString()}
                 </div>
               </div>
