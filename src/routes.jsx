@@ -21,6 +21,7 @@ import HomeFollowing from "./subcomponents/HomeFollowing";
 import Posts from "./subcomponents/Posts";
 import ViewProfile from "./subcomponents/ViewProfile";
 import TextRoute from "./otherRoutes/textRoute";
+import ErrorPage from "./ErrorPage";
 
 const routes = [
   {
@@ -106,5 +107,6 @@ const routes = [
     path: "/signup",
     element: <Signup />,
   },
+  { path: "*", element: <ErrorPage /> },
 ];
 export default routes;
